@@ -1,4 +1,4 @@
-# vue-h5-template
+# time-sharing-client
 
 基于 vue-cli4.0 + webpack 4 + vant ui + sass+ rem 适配方案+axios 封装，构建手机端模板脚手架
 
@@ -17,7 +17,7 @@
 
 git clone https://github.com/sunniejs/vue-h5-template.git
 
-cd vue-h5-template
+cd time-sharing-client
 
 npm install
 
@@ -113,7 +113,7 @@ module.exports = config
 ```javascript
 // 本地环境配置
 module.exports = {
-  title: 'vue-h5-template',
+  title: 'time-sharing-client',
   baseUrl: 'http://localhost:9018', // 项目地址
   baseApi: 'https://test.xxx.com/api', // 本地api请求地址
   APPID: 'xxx',
@@ -332,7 +332,7 @@ Vue.use(Tabbar).use(TabbarItem)
 
 #### 目录结构
 
-vue-h5-template 所有全局样式都在 `@/src/assets/css` 目录下设置
+time-sharing-client 所有全局样式都在 `@/src/assets/css` 目录下设置
 
 ```bash
 ├── assets
