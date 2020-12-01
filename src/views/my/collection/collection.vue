@@ -14,7 +14,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '我的收藏',
+  name: 'collection', // 我的收藏
   components: {},
   data() {
     return {}

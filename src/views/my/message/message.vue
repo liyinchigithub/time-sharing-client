@@ -14,7 +14,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '消息页',
+  name: 'message',// 消息页
   components:{
   
   },

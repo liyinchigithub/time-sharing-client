@@ -14,7 +14,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '我的发布',
+  name: 'IRelease',// 我的发布
   components:{
   
   },

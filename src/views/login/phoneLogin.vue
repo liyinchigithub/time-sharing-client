@@ -6,8 +6,9 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
-  name: '',
+  name: 'phoneLogin',// 手机号登录
   components:{
   
   },

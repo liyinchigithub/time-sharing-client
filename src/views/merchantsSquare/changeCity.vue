@@ -14,7 +14,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '切换城市页',
+  name: 'changeCity',// 切换城市页
   components:{
   
   },

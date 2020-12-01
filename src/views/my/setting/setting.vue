@@ -18,7 +18,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '设置页',
+  name: 'setting',设置页
   components:{
   
   },

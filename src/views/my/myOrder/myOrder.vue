@@ -3,7 +3,7 @@
     <div>
       我的订单
       <!-- 标签 -->
-      
+
       <!-- 列表 -->
 
       <!-- 卡片 -->
@@ -18,7 +18,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '我的订单',
+  name: 'myOrder',// 我的订单
   components:{
   
   },

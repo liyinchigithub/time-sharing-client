@@ -14,7 +14,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '',
+  name: 'login',// 登录页
   components:{
   
   },

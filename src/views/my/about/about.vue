@@ -10,7 +10,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '关于说明页',
+  name: 'about',// 关于说明页
   components:{
   
   },

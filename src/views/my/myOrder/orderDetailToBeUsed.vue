@@ -16,7 +16,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '订单详情-待使用订单',
+  name: 'orderDetailToBeUsed',// 订单详情-待使用订单
   components:{
   
   },

@@ -13,7 +13,9 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
+  name:"housingMatch",
   data() {
     return {}
   },

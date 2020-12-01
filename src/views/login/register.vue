@@ -20,7 +20,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '',
+  name: 'register',// 注册页
   components:{
   
   },

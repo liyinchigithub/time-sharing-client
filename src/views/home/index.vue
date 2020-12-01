@@ -12,7 +12,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '首页',
+  name: 'index',// 首页
   data() {
     return {}
   },

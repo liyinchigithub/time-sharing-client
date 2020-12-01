@@ -26,7 +26,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '消息页',
+  name: 'confirmationMessage',// 消息页
   components:{
   
   },

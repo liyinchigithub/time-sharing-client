@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: '',
+  name: 'wechatLoginOther',// 添加其他号码
   components:{
   
   },

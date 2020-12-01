@@ -14,7 +14,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '需求发布成功页',
+  name: 'requirementReleaseSuccess',// 需求发布成功页
   components:{
   
   },

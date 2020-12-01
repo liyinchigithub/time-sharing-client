@@ -10,7 +10,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '需求发布页',
+  name: 'requirementRelease',// 需求发布页
   components:{
   
   },

@@ -16,7 +16,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: '订单详情-待付款订单',
+  name: 'orderDetailObligation',// 订单详情-待付款订单
   components:{
   
   },

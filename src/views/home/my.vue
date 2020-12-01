@@ -20,10 +20,12 @@
 </template>
 
 <script>
+/* eslint-disable */
 // 请求接口
 import { getUserInfo } from '@/api/user.js'
 import { mapGetters } from 'vuex'
 export default {
+  name:"my",// 我的页面
   data() {
     return {
       wechat: `${this.$cdn}/wx/640.gif`
