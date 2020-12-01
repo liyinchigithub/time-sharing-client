@@ -1,50 +1,31 @@
 // 切换城市页
 <template>
-    <div>
-      <!-- 搜索城市、取消 -->
+  <div>
+    <!-- 搜索城市、取消 -->
 
-      <!-- 当前城市 -->
+    <!-- 当前城市 -->
 
-      <!-- 最近访问 -->
+    <!-- 最近访问 -->
 
-      <!-- 热门城市 -->
-    </div>
+    <!-- 热门城市 -->
+  </div>
 </template>
 
 <script>
 /* eslint-disable */
 export default {
-  name: 'changeCity',// 切换城市页
-  components:{
-  
-  },
+  name: 'changeCity', // 切换城市页
+  components: {},
   data() {
-    return {
-       
-    }
+    return {}
   },
-  computed: {
-
-
-    
-  },
-  methods: {
-   
-    
-  },
-  watch: {
-
-  },
-  directives: {
-
-  },
-  beforeCreate() {
-
-  },
-  created() { 
-  }
+  computed: {},
+  methods: {},
+  watch: {},
+  directives: {},
+  beforeCreate() {},
+  created() {}
 }
 </script>
 <style scoped>
-
 </style>

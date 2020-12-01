@@ -1,50 +1,27 @@
 // 消息页
 <template>
-    <div>
-      消息页
-      <!-- 列表 -->
+  <div>
+    消息页
+    <!-- 列表 -->
 
-      <!-- 卡片（继续房间查看流程） -->
-
-
-
-    </div>
+    <!-- 卡片（继续房间查看流程） -->
+  </div>
 </template>
-
 <script>
 /* eslint-disable */
 export default {
-  name: 'message',// 消息页
-  components:{
-  
-  },
+  name: 'message', // 消息页
+  components: {},
   data() {
-    return {
-       
-    }
+    return {}
   },
-  computed: {
-
-
-    
-  },
-  methods: {
-   
-    
-  },
-  watch: {
-
-  },
-  directives: {
-
-  },
-  beforeCreate() {
-
-  },
-  created() { 
-  }
+  computed: {},
+  methods: {},
+  watch: {},
+  directives: {},
+  beforeCreate() {},
+  created() {}
 }
 </script>
 <style scoped>
-
 </style>

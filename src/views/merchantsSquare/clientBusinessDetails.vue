@@ -20,7 +20,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: 'clientBusinessDetails',// 租客商家详情页
+  name: 'clientBusinessDetails', // 租客商家详情页
   components: {},
   data() {
     return {}

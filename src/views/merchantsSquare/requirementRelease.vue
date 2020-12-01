@@ -1,46 +1,25 @@
 // 需求发布页
 <template>
-    <div>
-      <!-- TODO 缺少这个页面 -->
-
-
-    </div>
+  <div>
+    <!-- TODO 缺少这个页面 -->
+  </div>
 </template>
 
 <script>
 /* eslint-disable */
 export default {
-  name: 'requirementRelease',// 需求发布页
-  components:{
-  
-  },
+  name: 'requirementRelease', // 需求发布页
+  components: {},
   data() {
-    return {
-       
-    }
+    return {}
   },
-  computed: {
-
-
-    
-  },
-  methods: {
-   
-    
-  },
-  watch: {
-
-  },
-  directives: {
-
-  },
-  beforeCreate() {
-
-  },
-  created() { 
-  }
+  computed: {},
+  methods: {},
+  watch: {},
+  directives: {},
+  beforeCreate() {},
+  created() {}
 }
 </script>
 <style scoped>
-
 </style>

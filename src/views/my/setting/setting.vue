@@ -1,54 +1,34 @@
 // 设置页
 <template>
-    <div>
-      设置页
-      <!-- 修改头像 -->
+  <div>
+    设置页
+    <!-- 修改头像 -->
 
-      <!-- 昵称 -->
+    <!-- 昵称 -->
 
-      <!-- 微信号 -->
+    <!-- 微信号 -->
 
-      <!-- 邮箱 -->
+    <!-- 邮箱 -->
 
-      <!-- 确定 -->
-
-    </div>
+    <!-- 确定 -->
+  </div>
 </template>
 
 <script>
 /* eslint-disable */
 export default {
-  name: 'setting',设置页
-  components:{
-  
-  },
+  name: 'setting', //设置页
+  components: {},
   data() {
-    return {
-       
-    }
+    return {}
   },
-  computed: {
-
-
-    
-  },
-  methods: {
-   
-    
-  },
-  watch: {
-
-  },
-  directives: {
-
-  },
-  beforeCreate() {
-
-  },
-  created() { 
-  }
+  computed: {},
+  methods: {},
+  watch: {},
+  directives: {},
+  beforeCreate() {},
+  created() {}
 }
 </script>
 <style scoped>
-
 </style>
