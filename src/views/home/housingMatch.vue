@@ -2,10 +2,12 @@
 <template>
   <div class="index-container">
     <div class="warpper">
-      <h1 class="demo-home__title">
-        <img src="https://www.sunniejs.cn/static/weapp/logo.png" /><span> VUE H5开发模板</span>
-      </h1>
       <h2 class="demo-home__desc">房源匹配</h2>
+      <!-- 当前城市 -->
+      <!-- 标签 -->
+      <!-- 筛选条件 -->
+      <!-- 列表 -->
+      <!-- 卡片 -->
     </div>
   </div>
 </template>

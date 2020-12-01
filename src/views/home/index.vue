@@ -1,7 +1,11 @@
 <!-- 商家广场 -->
 <template>
   <div class="index-container">
-    <div class="warpper"></div>
+    <div class="warpper">
+      商家广场
+      <!-- 发布需求 -->
+      <!-- 列表 -->
+    </div>
   </div>
 </template>
 
