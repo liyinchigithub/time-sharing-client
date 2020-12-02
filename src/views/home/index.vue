@@ -3,6 +3,7 @@
   <div class="index-container">
     <div class="warpper">
       商家广场
+       <van-icon class-prefix="iconfont" name="weixin" size="0.2rem" color="green" />
       <!-- 发布需求 -->
       <!-- 列表 -->
     </div>
