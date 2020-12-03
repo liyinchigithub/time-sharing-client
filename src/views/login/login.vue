@@ -13,6 +13,7 @@
 
 <script>
 /* eslint-disable */
+import mock from '../../../mock/index'
 export default {
   name: 'login', // 登录页
   components: {},

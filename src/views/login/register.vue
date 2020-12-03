@@ -19,6 +19,7 @@
 
 <script>
 /* eslint-disable */
+import mock from '../../../mock/index'
 export default {
   name: 'register', // 注册页
   components: {},
