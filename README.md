@@ -1,28 +1,137 @@
-# time-sharing-client
+# time-sharing-merchants
 
-基于 vue-cli4.0 + webpack 4 + vant ui + sass+ rem 适配方案+axios 封装，构建手机端模板脚手架
 
-掘金: [vue-cli4 vant rem 移动端框架方案](https://juejin.im/post/5cfefc73f265da1bba58f9f7)
+<a href="https://github.com/vuejs/vue">
+    <img src="https://img.shields.io/badge/vue-2.6.11-brightgreen.svg" alt="vue">
+  </a>
+  <a href="https://github.com/youzan/vant">
+    <img src="https://img.shields.io/badge/vant-2.11.1-brightgreen.svg" alt="vant">
+  </a>
+    <a href="https://github.com/iview/iview">
+        <img src="https://img.shields.io/badge/iview-3.5.4-brightgreen.svg" alt="iview">
+  </a>
+  <a href="https://github.com/youzan/vant">
+    <img src="https://img.shields.io/badge/Node.js-12.14.1-brightgreen.svg" alt="Node.js">
+  </a>
+  <a href="https://github.com/liyinchigithub">
+    <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg" alt="donate">
+  </a>
 
-### Node 版本要求
 
-`Vue CLI` 需要 Node.js 8.9 或更高版本 (推荐 8.11.0+)。你可以使用 [nvm](https://github.com/nvm-sh/nvm) 或
+>基于 vue-cli4.0 + webpack 4 + vant ui + sass+ rem 适配方案+axios 封装，构建手机端模板脚手架
+
+>掘金: [vue-cli4 vant rem 移动端框架方案](https://juejin.im/post/5cfefc73f265da1bba58f9f7)
+
+
+>`Vue CLI` 需要 Node.js 8.9 或更高版本 (推荐 8.11.0+)。你可以使用 [nvm](https://github.com/nvm-sh/nvm) 或
 [nvm-windows](https://github.com/coreybutler/nvm-windows) 在同一台电脑中管理多个 Node 版本。
 
-本示例 Node.js 12.14.1
 
-### 启动项目
+
+# 一、启动
+
+## （二）环境配置（使用开发者工具打开本地hosts反向代理地址）
+
+* JDK
+* Nginx
+* Tomcat
+* 微信开发者工具
+
+### 1.Nginx
+
+### （1）下载Nginx
+
+>http://nginx.org/en/download.html
+
+### （2）配置Nginx
+
+Nginx环境变量
+
+环境变量名：nginx_home
+环境变量值：nginx存放路径
+
+Nginx配置文件内容
+
+```json
+// 修改nginx.conf文件
+ server {
+        listen       80;   # 监听的端口号
+        server_name  wxh5.beta.fssh.com; # 本地访问的域名(host文件也要配置)
+
+        location /{
+            proxy_pass http://127.0.0.1:9020/; # 前端项目地址
+        }
+        location /sns{
+            # return 666;
+            proxy_pass https://api.weixin.qq.com; # 微信公众号api地址
+        }
+        location  /code {
+             proxy_pass http://127.0.0.1:4343; # code回调接口地址
+        }
+        location  /api {
+             proxy_pass http://127.0.0.1:4343; # 后端项目接口地址
+        }
+       
+    }
+```
+
+代理的域名加本地项目启用的端口号->nginx服务会代理本地起的服务从而可以在wx开发者工具上调试，因为你的目的就是为了在工具调试本地的微信授权登录的流程
+
+### （3）启动Nginx
+
+```shell
+start nginx // 启动
+nginx -s stop // 停止
+nginx -s reload // 修改配置后重新加载生效  
+
+```
+
+[Nginx配置](https://www.cnblogs.com/markkang/p/12052106.html)
+
+[windows10下nginx启动一闪而过(原因以及查看和解决的办法)](https://blog.csdn.net/qq_37457202/article/details/82016374)
+
+[windows10下无法启动nginx的解决方法](https://blog.csdn.net/qq_41086359/article/details/105564918)
+
+
+### 2.本地电脑配置hosts（window）
+
+```
+127.0.0.1 自定义本地域名
+```
+>https://www.jb51.net/os/win10/395409.html
+
+### 3.tomcat
+
+修改tomcat配置文件：apache-tomcat-8.5.57/conf/server.xml
+```xml
+<Connector port="8181"  useBodyEncodingForURI="true" protocol="HTTP/1.1"
+connectionTimeout="20000"
+redirectPort="8443" />
+```
+
+```shell
+sh ./apache-tomcat-8.5.57/bin/startup.sh
+```
+
+### 4.手机查看效果
+
+手机设置代理开启手动，输入本地电脑IP地址（同一局域网下）
+
+打开fiddler或charles工具，微信扫描微信开发者工具二维吗
+
+### 5.启动开发
 
 ```bash
 
-git clone https://github.com/sunniejs/vue-h5-template.git
-
-cd time-sharing-client
+cd time-sharing-merchants
 
 npm install
 
 npm run serve
 ```
+
+# 二、脚手架功能
+
 
 <span id="top">目录</span>
 
@@ -45,7 +154,7 @@ npm run serve
 - [√ 添加 IE 兼容 ](#ie)
 - [√ Eslint+Pettier 统一开发规范 ](#pettier)
 
-### <span id="env">✅ 配置多环境变量 </span>
+## <span id="env">✅ 配置多环境变量 </span>
 
 `package.json` 里的 `scripts` 配置 `serve` `stage` `build`，通过 `--mode xxx` 来执行不同环境
 
@@ -113,13 +222,27 @@ module.exports = config
 ```javascript
 // 本地环境配置
 module.exports = {
-  title: 'time-sharing-client',
+  title: 'vue-h5-template',
   baseUrl: 'http://localhost:9018', // 项目地址
   baseApi: 'https://test.xxx.com/api', // 本地api请求地址
   APPID: 'xxx',
   APPSECRET: 'xxx'
 }
 ```
+
+```javascript
+// 生产环境配置
+// 正式
+module.exports = {
+  title: '商户端',
+  baseUrl: 'https://pms.bchat.top', // 正式项目地址
+  baseApi: 'https://pms.bchat.top', // 正式api请求地址
+  APPID: 'xxx',
+  APPSECRET: 'xxx',
+  $cdn: 'https://www.xxxx.cn/static'
+}
+```
+
 
 根据环境不同，变量就会不同了
 
@@ -128,6 +251,18 @@ module.exports = {
 import { baseApi } from '@/config'
 console.log(baseApi)
 ```
+
+生产环境
+```javascript
+//根据环境引入不同配置 process.env.NODE_ENV
+const environment = 'production'
+const config = require('./env.' + environment)
+module.exports = config
+
+```
+
+注意：微信公众号平台JS接口安全域名、网页授权获取用户基本信息要更改域名和服务器项目域名一致。
+
 
 [▲ 回顶部](#top)
 
@@ -332,7 +467,7 @@ Vue.use(Tabbar).use(TabbarItem)
 
 #### 目录结构
 
-time-sharing-client 所有全局样式都在 `@/src/assets/css` 目录下设置
+vue-h5-template 所有全局样式都在 `@/src/assets/css` 目录下设置
 
 ```bash
 ├── assets
@@ -452,12 +587,20 @@ new Vue({
 
 使用
 
+```
+{{userName?userName.name:""}}
+
+```
+
 ```html
 <script>
   import { mapGetters } from 'vuex'
   export default {
     computed: {
+      // 获取getter中的state（使用map辅助函数：）
       ...mapGetters(['userName'])
+      // 获取getter中的state（不使用map辅助函数：）
+      test:()=> this.$store.getters.userName
     },
 
     methods: {
@@ -469,6 +612,8 @@ new Vue({
   }
 </script>
 ```
+
+
 
 [▲ 回顶部](#top)
 
@@ -583,17 +728,26 @@ export default service
 
 在`src/api` 文件夹下统一管理接口
 
-- 你可以建立多个模块对接接口, 比如 `home.js` 里是首页的接口这里讲解 `user.js`
+- 你可以建立多个模块对接接口, 比如 `home.js` 里是首页的接口这里讲解 `login.js`
 - `url` 接口地址，请求的时候会拼接上 `config` 下的 `baseApi`
 - `method` 请求方法
-- `data` 请求参数 `qs.stringify(params)` 是对数据系列化操作
+- `data` 请求参数 `qs.stringify(params)` 是对数据系列化操作(x-www-formdata-urlencode)
 - `hideloading` 默认 `false`,设置为 `true` 后，不显示 loading ui 交互中有些接口不需要让用户感知
+- `response`即 response.data（如果使用axios response.data.X）
+#### 如何调用
+
+
+x-www-form-urlencode
 
 ```javascript
 import qs from 'qs'
 // axios
 import request from '@/utils/request'
 //user api
+
+var params={
+  "userID": "xxxx",
+}
 
 // 用户信息
 export function getUserInfo(params) {
@@ -606,17 +760,92 @@ export function getUserInfo(params) {
 }
 ```
 
-#### 如何调用
 
+form-data
+
+
+
+```JavaScript
+import FormData from 'form-data' // 引入content-type为form-data
+
+
+
+/**
+ * @method getSpaceDetail
+ * @description 空间详情
+ * @param  ID 空间ID
+ * @returns object 
+ * */
+export function getSpaceDetail(params,headers) {
+  return request({
+    url: `/api/v1/space/get/`, // 这边/api/路径，是nginx反向代理路径
+    method: 'post',
+    headers:headers,
+    data: params
+  })
+}
+
+    // 请求后端，获取空间详情页
+    var data = new FormData()
+    // 请求body
+    data.append('id', this.spaceID)
+    // 请求header
+    var headers = { OpenID: localStorage.getItem('OpenID') }
+    getSpaceDetail(data, headers)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data))
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+```
+
+
+json
+
+##### POST
 ```javascript
 // 请求接口
-import { getUserInfo } from '@/api/user.js'
+import { getUserInfo } from '@/api/login/login.js'
 
 const params = { user: 'sunnie' }
 getUserInfo(params)
   .then(() => {})
   .catch(() => {})
 ```
+
+
+##### GET
+
+```javascript
+import api from './index'
+// axios
+import request from '@/utils/request'
+
+// 微信授权登录
+export function wxAuhtorLogin(data) {
+  return request({
+    url: `https://api.weixin.qq.com/sns/auth?access_token=${data.ACCESS_TOKEN}&openid=${data.OPENID}`,
+    method: 'get',
+  })
+}
+```
+
+```javascript
+  const params = { ACCESS_TOKEN: "", OPENID: "" }
+      // 请求后端
+      wxAuhtorLogin(params)
+        .then(response => {
+          console.log(response)
+          Toast.success(`${response}`)
+          // TODO 微信绑定手机号成功，进入首页
+        })
+        .catch(err => {
+          Toast.fail(`发生错误`)
+          console.log(err)
+        })
+```
+
 
 [▲ 回顶部](#top)
 
@@ -683,7 +912,7 @@ module.exports = {
 
 ### <span id="proxy">✅ 配置 proxy 跨域 </span>
 
-如果你的项目需要跨域设置，你需要打来 `vue.config.js` `proxy` 注释 并且配置相应参数
+如果你的项目需要跨域设置，你需要打开 `vue.config.js` `proxy` 注释 并且配置相应参数
 
 <u>**!!!注意：你还需要将 `src/config/env.development.js` 里的 `baseApi` 设置成 '/'**</u>
 
@@ -717,6 +946,17 @@ export function getUserInfo(params) {
   })
 }
 ```
+
+vue-cli 4.x 跨域配置
+
+>https://cli.vuejs.org/zh/config/#devserver-proxy
+
+>https://www.cnblogs.com/kgwei520blog/p/13686854.html
+
+[vue-cli跨域配置 以及一些注意点](https://blog.csdn.net/weixin_44106924/article/details/108719099)
+
+[常用vue.config.js](https://blog.csdn.net/m0_38134431/article/details/104802038)
+
 
 [▲ 回顶部](#top)
 
@@ -1118,9 +1358,60 @@ Vscode setting.json 设置
 
 [▲ 回顶部](#top)
 
-# 鸣谢 ​
+# 启动mock服务
 
-[vue-cli4-config](https://github.com/staven630/vue-cli4-config)  
-[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
+>src\mock\server.js
+
+[mock数据](https://github.com/liyinchigithub/mockjs-demo/tree/master/test)
 
 
+```shell
+cd D:\自动化\time-sharing-merchants\src\mock
+nodemon server
+```
+
+# H5 排版工具（鲁班H5）
+
+>https://h5.luban-h5.com/#/work-manager/list
+
+[▲ 回顶部](#top)
+
+# H5 CSS样式工具
+
+>http://www.html580.com/tool/csstypeset/index.php
+
+[▲ 回顶部](#top)
+
+# 微信JSSDK
+
+>https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#1
+
+[▲ 回顶部](#top)
+
+# 微信网页开发-网页授权
+
+>https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html
+
+
+[▲ 回顶部](#top)
+
+
+### 组件使用注意事项：
+
+1.部分组件使用iview使用方式和vant差异性，例如：@change="",iview格式是@on-change=""。
+
+2.
+
+
+[▲ 回顶部](#top)
+
+
+# 批处理
+
+1.本地window10打包编辑后dist文件要复制到项目git底下，批处理帮助快速执行
+
+>win10-del-dist-file.bat
+
+>win10-git.bat
+
+注意：中文路径要另存为编码ANSI

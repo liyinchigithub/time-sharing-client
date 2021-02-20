@@ -16,21 +16,21 @@
 /* eslint-disable */
 import TabBar from '@/components/TabBar'
 export default {
-  name: 'AppLayout',
+  name: 'AppLayout',// 底栏tabbar的父组件
   data() {
     return {
       tabbars: [
         {
-          title: '商家广场',
+          title: '租客广场',
           to: {
             name: 'Home'
           },
           icon: 'wap-home-o'
         },
         {
-          title: '房源匹配',
+          title: '发布',
           to: {
-            name: 'HousingMatch' // 注意大小写，与src\router\router.config.js name一致
+            name: 'Release' // 注意大小写，与src\router\router.config.js name一致
           },
           icon: 'aim'
         },
@@ -50,6 +50,8 @@ export default {
   methods: {
     handleChange(v) {
       console.log('tab value:', v)
+      // TODO 判断是否点击了底部tabbar发布按钮（子组件触发父组件事件），显示底部弹窗
+
     }
   }
 }

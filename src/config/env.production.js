@@ -1,9 +1,10 @@
 // 正式
 module.exports = {
-  title: 'time-sharing-client',
-  baseUrl: 'https://www.xxx.com/', // 正式项目地址
-  baseApi: 'https://www.xxx.com/api', // 正式api请求地址
-  APPID: 'xxx',
-  APPSECRET: 'xxx',
-  $cdn: 'https://www.sunniejs.cn/static'
+  title: '商户端',
+  baseUrl: 'https://pms.bchat.top', // 正式项目地址
+  baseApi: 'https://pms.bchat.top', // 正式api请求地址
+  APPID: 'wx474f2e40fac46316',
+  APPSECRET: 'cc7fd8e22d511b042bbee9053684433f',
+  $cdn: 'https://www.xxxx.cn/static'
 }
+ 

@@ -1,6 +1,7 @@
 // 添加其他号码
 <template>
   <div>
+    添加其他号码
     <!-- 手机号 -->
 
     <!-- 验证码 -->
@@ -14,9 +15,8 @@
 </template>
 
 <script>
-/* eslint-disable */
 export default {
-  name: 'wechatLoginOther', // 添加其他号码
+  name: 'wechatLoginOther',// 添加其他号码
   components: {},
   data() {
     return {}
