@@ -23,12 +23,12 @@ export function getFavoriteDetail(data, headers) {
 
 
 /**
- * @method getFavoriteList
+ * @method getMyFavoriteList
  * @description 获取商家咨询单列表接口
  * @param headers OpenID 商家openid
  * @returns object 
  * */
-export function getFavoriteList(data, headers) {
+export function getMyFavoriteList(data, headers) {
   return request({
     url: `/api/v1/consult/my`, // 这边/api/路径，是nginx反向代理路径
     method: 'post',
