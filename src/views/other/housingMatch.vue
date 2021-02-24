@@ -196,7 +196,7 @@
 <script>
 /* eslint-disable */
 import { Toast, Dialog, Notify, DropdownMenu, DropdownItem, Popup } from 'vant'
-import { getMerchantsHousingResourceList } from '@/api/my/myHousingResource/myHousingResource.js'
+import { getCustomerHousingResourceList } from '@/api/my/myHousingResource/myHousingResource.js'
 export default {
   name: 'housingMatch', // 房源匹配
   data() {
@@ -368,7 +368,7 @@ export default {
         // // 请求header
         // var headers = { OpenID: localStorage.getItem('OpenID') }
         // // 发起请求
-        // getMerchantsHousingResourceList(data, headers)
+        // getCustomerHousingResourceList(data, headers)
         //   .then(response => {
         //     // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getRoomList请求，created使用data参数必须是箭头函数，否则报错undefined
         //     console.log(JSON.stringify(response.rows))
@@ -408,7 +408,7 @@ export default {
       // 请求header
       var headers = { OpenID: localStorage.getItem('OpenID') }
       // 发起请求
-      getMerchantsHousingResourceList(data, headers)
+      getCustomerHousingResourceList(data, headers)
         .then(response => {
           // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getRoomList请求，created使用data参数必须是箭头函数，否则报错undefined
           console.log(JSON.stringify(response.rows))
@@ -444,7 +444,7 @@ export default {
       // 请求header
       var headers = { OpenID: localStorage.getItem('OpenID') }
       // 发起请求
-      getMerchantsHousingResourceList(data, headers)
+      getCustomerHousingResourceList(data, headers)
         .then(response => {
           // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getRoomList请求，created使用data参数必须是箭头函数，否则报错undefined
           console.log(JSON.stringify(response.rows))

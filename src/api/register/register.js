@@ -41,7 +41,7 @@ export function getVerifyCode(params) {
 
 export function bindPhone(data, headers) {
 	return request({
-		url: `/api/v1/business/bind`, // 这边/api/路径，是nginx反向代理路径
+		url: `/api/v1/customer/bind`, // 这边/api/路径，是nginx反向代理路径
 		headers: headers,
 		method: 'post',
 		data:data
@@ -49,7 +49,7 @@ export function bindPhone(data, headers) {
 }
 /**
  * @method 
- * @description 修改商家信息
+ * @description 修改租客信息
  * @param object data 
  * @returns object 
  * {
@@ -58,29 +58,12 @@ export function bindPhone(data, headers) {
 	}
  * */
 
-export function modifyMerchantInformation(data,headers) {
+export function modifyCustomerInformation(data,headers) {
 	return request({
-		url: `/api/v1/business/update`, // 这边/api/路径，是nginx反向代理路径
+		url: `/api/v1/customer/update`, // 这边/api/路径，是nginx反向代理路径
 		method: 'post',
 		headers:headers,
 		data:data
 	});
 }
-/**
- * @method 
- * @description 添加商家信息
- * @param object data 
- * @returns object 
- * {
-	"msg": "操作成功",
-	"code": 0
-	}
- * */
 
-export function addMerchantInformation(data) {
-	return request({
-		url: `/api/`, // 这边/api/路径，是nginx反向代理路径
-		method: 'post',
-		data:data
-	});
-}

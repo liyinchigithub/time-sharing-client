@@ -8,17 +8,17 @@
         <img src="../../assets/image/evaluate.png" style="width: 100%; height: 100%"
       /></van-uploader>
       <div class="img-box">
-        <img class="image" :src="merchantsUploadImages" v-show="isShowMerchantsThumbnail" />
+        <img class="image" :src="customerUploadImages" v-show="isShowCustomerThumbnail" />
       </div> -->
     </div>
     <!-- 表单 -->
     <div class="registerForm">
       <van-form @submit="onSubmit" @failed="failed">
-        <!-- 房间图片（第一张图将作为封面） -->
-        <van-field name="Logo" label="商家头像">
+        <!-- 头像图片 -->
+        <van-field name="Logo" label="头像">
           <template #input>
             <van-uploader
-              v-model="merchantsUploadImagesPre"
+              v-model="customerUploadImagesPre"
               :after-read="afterReadLogo"
               :multiple="false"
               :max-count="1"
@@ -28,19 +28,27 @@
           </template>
         </van-field>
         <van-field
-          v-model="merchantsUsername"
-          name="merchantsUsername"
-          label="商家名称"
-          placeholder="请输入商家名称"
-          :rules="[{ required: true, message: '商家名称不能为空' }]"
+          v-model="customerNickname"
+          name="customerNickname"
+          label="昵称"
+          placeholder="请输入昵称"
+          :rules="[{ required: true, message: '昵称不能为空' }]"
         />
         <van-field
-          v-model="merchantsTel"
-          type="tel"
-          name="merchantsTel"
-          label="联系方式"
-          placeholder="请输入联系方式"
-          :rules="[{ required: true, message: '联系方式不能为空' }]"
+          v-model="customerEmail"
+          type="text"
+          name="customerEmail"
+          label="邮箱"
+          placeholder="请输入邮箱"
+          :rules="[{ required: true, message: '邮箱不能为空' }]"
+        />
+        <van-field
+          v-model="customerWechat"
+          type="text"
+          name="customerWechat"
+          label="微信号"
+          placeholder="请输入微信号"
+          :rules="[{ required: true, message: '微信号不能为空' }]"
         />
         <div style="margin-top: 60%">
           <van-button round block type="info" native-type="submit"> 进入 </van-button>
@@ -53,20 +61,21 @@
 <script>
 /* eslint-disable */
 import { Toast } from 'vant'
-import { modifyMerchantInformation } from '@/api/register/register.js'
+import { modifyCustomerInformation } from '@/api/register/register.js'
 import axios from 'axios'
 export default {
   name: 'registerInfo', // 注册信息
   components: {},
   data() {
     return {
-      merchantsUsername: '', // 商户名称
-      merchantsTel: '', // 商户手机
+      customerNickname: '', // 名称
+      customerEmail: '', // 邮箱
+      customerWechat: '', // 微信号
       // 头像上传
-      isShowMerchantsThumbnail: false, // 是否显示文件上传缩略图
-      merchantsImageName: '', // 文件上传 缩略图文件名称
-      merchantsUploadImagesPre: [], // 图片预览地址
-      merchantsUploadImages: [] // 图片地址
+      isShowCustomerThumbnail: false, // 是否显示文件上传缩略图
+      customerImageName: '', // 文件上传 缩略图文件名称
+      customerUploadImagesPre: [], // 图片预览地址
+      customerUploadImages: [] // 图片地址
     }
   },
   computed: {},
@@ -74,32 +83,42 @@ export default {
     // 表单提交（登录）
     onSubmit(values) {
       console.log('submit', values)
-      //  TODO 请求后端修改用户信息
-      //  请求后端，获取空间列表
-      var data = new FormData()
-      // 请求body
-      data.append('phone', values.merchantsTel)
-      data.append('name', values.merchantsUsername)
-      data.append('headimgurl', this.merchantsUploadImages[0])
-      // 请求header
-      var headers = { OpenID: localStorage.getItem('OpenID') }
-      // 发起请求
-      modifyMerchantInformation(data, headers)
-        .then(response => {
-          // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getSpaceList请求，created使用data参数必须是箭头函数，否则报错undefined
-          console.log(JSON.stringify(response.rows))
-          // 判断空间下是否有房间，没有房间提示先新建房间
-          if (response.msg === '操作成功' || response.code === 0) {
-            // TODO 完善信息保存成功后，进入首页
-            Toast.fail('保存成功')
-            this.$router.push('/home')
-          } else {
-            Toast.fail('保存失败')
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      if (
+        this.customerUploadImages[0] === [] ||
+        this.customerUploadImages[0] === '' ||
+        this.customerUploadImages[0] === undefined
+      ) {
+        // 警告通知
+        Notify({ type: 'warning', message: '请上传图片' })
+      } else {
+        //  TODO 请求后端修改用户信息
+        //  请求后端，获取空间列表
+        var data = new FormData()
+        // 请求body
+        data.append('nickname', values.customerNickname)
+        data.append('email', values.customerEmail)
+        data.append('wechat', values.customerWechat)
+        data.append('headimgurl', this.customerUploadImages[0])
+        // 请求header
+        var headers = { OpenID: localStorage.getItem('OpenID') }
+        // 发起请求
+        modifyCustomerInformation(data, headers)
+          .then(response => {
+            // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getSpaceList请求，created使用data参数必须是箭头函数，否则报错undefined
+            console.log(JSON.stringify(response.rows))
+            // 判断空间下是否有房间，没有房间提示先新建房间
+            if (response.msg === '操作成功' || response.code === 0) {
+              // TODO 完善信息保存成功后，进入首页
+              Toast.fail('保存成功')
+              this.$router.push('/home')
+            } else {
+              Toast.fail('保存失败')
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
     },
     // 图片上传
     afterReadLogo(file) {
@@ -134,8 +153,8 @@ export default {
             // Toast
             Toast.success('图片上传成功')
             // 响应body返回图片存储服务器所在路径
-            console.log('this.merchantsUploadImages', response.data.data)
-            this.merchantsUploadImages.push(response.data.data)
+            console.log('this.customerUploadImages', response.data.data)
+            this.customerUploadImages.push(response.data.data)
           }
         })
         .catch(error => {

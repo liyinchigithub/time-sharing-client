@@ -104,7 +104,7 @@
 /* eslint-disable */
 
 import { getMyFavoriteList } from '@/api/my/myFavorite/myFavorite.js'
-import { getMerchantsHousingResourceList, deleteHousingResource } from '@/api/my/myHousingResource/myHousingResource.js'
+import { getCustomerHousingResourceList, deleteHousingResource } from '@/api/my/myHousingResource/myHousingResource.js'
 import { Toast, Dialog, Notify } from 'vant'
 import FormData from 'form-data' // 引入content-type为form-data
 export default {
@@ -198,7 +198,7 @@ export default {
       data.append('pageSize', this.pageCount)
       // 请求header
       var headers = { OpenID: localStorage.getItem('OpenID') }
-      getMerchantsHousingResourceList(data, headers)
+      getCustomerHousingResourceList(data, headers)
         .then(response => {
           console.log('response', response)
           // 请求完将数据赋值给itemList
@@ -233,7 +233,7 @@ export default {
       // 请求header
       var headers = { OpenID: localStorage.getItem('OpenID') }
       // 发起请求
-      getMerchantsHousingResourceList(data, headers)
+      getCustomerHousingResourceList(data, headers)
         .then(response => {
           // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getRoomList请求，created使用data参数必须是箭头函数，否则报错undefined
           console.log(JSON.stringify(response.rows))

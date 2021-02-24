@@ -63,7 +63,7 @@ export default {
          * */
         // 用户触发发起授权链接
         var appid = config.APPID
-        var redirect_uri = encodeURIComponent(`${config.baseUrl}/#/middle`) // code回调地址（vue mode bash要带#）
+        var redirect_uri = encodeURIComponent(`https://pms.bchat.top/#/middle?isCustomer=true`) // code回调地址（vue mode bash要带#），注意：这边回调地址和商家端一致不要引用.
         window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
         // this.$router.push('/home') // 产品看时使用
 

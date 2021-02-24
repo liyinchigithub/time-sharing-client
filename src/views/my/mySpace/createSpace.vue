@@ -137,6 +137,11 @@ export default {
     // 表单提交
     onSubmit(values) {
       console.log('submit', values)
+      // 判断图片是否上传
+      if (this.spaceLogo[0] === [] || this.spaceMerchantDetailsImagesURL === []||this.spaceLogo[0] === undefined || this.spaceMerchantDetailsImagesURL === undefined ||this.spaceLogo[0] === "" || this.spaceMerchantDetailsImagesURL === "") {
+        // 警告通知
+        Notify({ type: 'warning', message: '请上传图片' })
+      } else {
       // 请求后端
       var data = new FormData()
       // 请求body
@@ -173,6 +178,7 @@ export default {
         .catch(error => {
           console.log(error)
         })
+        }
     },
     // 图片上传(logo)
     afterReadLogo(file) {

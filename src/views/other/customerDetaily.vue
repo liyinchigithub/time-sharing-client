@@ -10,22 +10,22 @@
         </div>
       </template>
     </van-nav-bar>
-    <div class="merchantsInfo">
+    <div class="customerInfo">
       <!-- 房间图片 -->
       <div>
         <van-swipe :autoplay="3000" :width="400" :height="300">
-          <van-swipe-item v-for="(url, index) in merchantsHeadimgurl" :key="index">
-            <img v-lazy="url" @click="getImg(merchantsHeadimgurl, index)" />
+          <van-swipe-item v-for="(url, index) in customerHeadimgurl" :key="index">
+            <img v-lazy="url" @click="getImg(customerHeadimgurl, index)" />
           </van-swipe-item>
         </van-swipe>
       </div>
       <!-- 商家卡片 -->
       <div class="card">
         <!-- 商家名称 -->
-        <div class="merchantsName">
-          {{ merchantsName }}
+        <div class="customerName">
+          {{ customerName }}
         </div>
-        <div class="merchantsAddress"><van-icon name="location-o" />{{ merchantsAddress }}</div>
+        <div class="customerAddress"><van-icon name="location-o" />{{ customerAddress }}</div>
       </div>
       <!-- 商家房间列表（仅显示最新前个房间） -->
       <div style="margin-top: 35%">
@@ -53,7 +53,7 @@
       </div>
       <!-- 商家介绍 -->
       <div style="margin-left: 10%; margin-top: 10%"><h2>商家介绍</h2></div>
-      <div class="merchantsIntroduction">
+      <div class="customerIntroduction">
         作为嘉定区地标性建筑，宾馆拥有北欧风格的建筑群和2100平米的屋顶花园，环境优美闹中取静，是国家金叶级绿色旅游饭店，宾馆外场树木葱郁，绿草如茵，绿化率达到40%以上，停车场可容纳350余辆轿车停放，300余平方米的广场可举办多种形式的露天活动。
       </div>
       <!-- 详细介绍 -->
@@ -80,15 +80,15 @@ import wx from 'weixin-js-sdk'
 import config from '../../config/index' // 引入环境配置参数
 import { wxGetSignature } from '@/api/login/login.js' // 引入后端api
 export default {
-  name: 'merchantsDetaily', // 商家详情
+  name: 'customerDetaily', // 商家详情
   components: {},
   data() {
     return {
       OverlayShow: true, // 遮罩层
-      merchantsID: '', // 商家ID
-      merchantsName: 'Zsmart精品名宿（杭州西湖断桥店）', // 商家名称
-      merchantsAddress: '杭州市西湖区西湖断桥风景区', // 商家地址
-      merchantsHeadimgurl: [
+      customerID: '', // 商家ID
+      customerName: 'Zsmart精品名宿（杭州西湖断桥店）', // 商家名称
+      customerAddress: '杭州市西湖区西湖断桥风景区', // 商家地址
+      customerHeadimgurl: [
         'https://axure-file.lanhuapp.com/fd338631-e93d-4ffd-a7f8-2a443b9f7825__0404f2847090f08d68915475d16eeeaa.png'
       ], // 商家头像
       roomList: [], // 商家的房间列表
@@ -145,9 +145,9 @@ export default {
       }
     },
     // 点击图片，进入图片预览事件
-    getImg(merchantsHeadimgurl, index) {
+    getImg(customerHeadimgurl, index) {
       ImagePreview({
-        images: merchantsHeadimgurl,
+        images: customerHeadimgurl,
         closeable: true,
         showIndex: true,
         loop: false, //是否循环播放
@@ -161,14 +161,14 @@ export default {
     // 查看更多
     viewMore() {
       //TODO 路由跳转（该商家下的房间列表）
-      this.$router.push(`/merchantsRoomList/${this.merchantsID}`)
+      this.$router.push(`/customerRoomList/${this.customerID}`)
     }
   },
   watch: {},
   created() {
     // TODO 请求后端，判断商家状态是否下线
-    var merchantsStatus = false
-    if (merchantsStatus) {
+    var customerStatus = false
+    if (customerStatus) {
       this.OverlayShow = false
     }
     //  JSSDK 调用微信分享接口
@@ -225,10 +225,10 @@ export default {
 
           // 自定义“分享给朋友”及“分享到QQ”按钮的分享内容
           wx.updateAppMessageShareData({
-            title: that.merchantsName, // 分享标题
+            title: that.customerName, // 分享标题
             desc: that.SpaceDetailedIntroduction, // 分享描述
             link: that.signatureUrl, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: that.merchantsHeadimgurl[0], // 分享图标
+            imgUrl: that.customerHeadimgurl[0], // 分享图标
             success: function () {
               // 设置成功
               console.log('JSSDK正常，可进行分享')
@@ -347,19 +347,19 @@ export default {
     // Vue给单独页面添加背景色
     document.body.style.backgroundColor = '#F5F5F5'
     // 接收路由地址传参
-    this.merchantsID = this.$route.params.merchantsID
-    console.log(`商家ID：${this.merchantsID}`)
+    this.customerID = this.$route.params.customerID
+    console.log(`商家ID：${this.customerID}`)
   }
 }
 </script>
 <style lang="scss" scoped>
-.merchantsName {
+.customerName {
   color: black;
   font-size: 20px;
   margin-top: 5%;
   margin-left: 10%;
 }
-.merchantsAddress {
+.customerAddress {
   font-size: 15px;
   color: black;
   margin-top: 5%;
@@ -409,7 +409,7 @@ export default {
   display: block;
   margin: 0 auto;
 }
-.merchantsIntroduction {
+.customerIntroduction {
   color: black;
   // position: absolute;
   width: 96%;

@@ -1,4 +1,4 @@
-# time-sharing-merchants
+# time-sharing-client
 
 
 <a href="https://github.com/vuejs/vue">
@@ -123,7 +123,7 @@ sh ./apache-tomcat-8.5.57/bin/startup.sh
 
 ```bash
 
-cd time-sharing-merchants
+cd time-sharing-client
 
 npm install
 
@@ -234,7 +234,7 @@ module.exports = {
 // 生产环境配置
 // 正式
 module.exports = {
-  title: '商户端',
+  title: '租客端',
   baseUrl: 'https://pms.bchat.top', // 正式项目地址
   baseApi: 'https://pms.bchat.top', // 正式api请求地址
   APPID: 'xxx',
@@ -1366,7 +1366,7 @@ Vscode setting.json 设置
 
 
 ```shell
-cd D:\自动化\time-sharing-merchants\src\mock
+cd D:\自动化\time-sharing-client\src\mock
 nodemon server
 ```
 

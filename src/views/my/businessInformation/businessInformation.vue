@@ -3,7 +3,7 @@
   <div>
     <!-- 顶栏 -->
     <van-nav-bar title="商家信息" left-arrow @click-left="onClickLeft" :fixed="true" :border="true" />
-    <div class="merchantsInfo">
+    <div class="customerInfo">
       <!-- 商家名称 -->
 
       <!-- 所在城市 -->
@@ -47,7 +47,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.merchantsInfo {
+.customerInfo {
   margin-top: 15%;
 }
 .card {

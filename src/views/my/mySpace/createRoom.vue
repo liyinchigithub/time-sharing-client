@@ -113,40 +113,53 @@ export default {
     // 表单提交
     onSubmit(values) {
       console.log('submit', values)
-      // 请求后端
-      var data = new FormData()
-      // 请求body
-      data.append('sid', this.spaceID) // 房间所属空间ID
-      data.append('name', this.roomName) // 房间名称
-      data.append('logo', this.roomLogo[0]) // 房间logo图片
-      data.append('images', this.roomImagesURL) // 房间详情图片
-      data.append('description', this.roomIntroduced) // 房间介绍
-      data.append('services', this.roomFacilityService) // 设施服务
-      data.append('notice', this.roomAttention) // 预订须知
-      data.append('remark', '')
-      // 请求header
-      var headers = { OpenID: localStorage.getItem('OpenID') }
-      // 发起请求
-      createRoom(data, headers)
-        .then(response => {
-          // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getSpaceList请求，created使用data参数必须是箭头函数，否则报错undefined
-          console.log(JSON.stringify(response))
-          // 判断是否创建成功
-          if (response.msg === '操作成功') {
-            Notify({ type: 'primary', message: '创建成功', duration: 1200 }) // Notify 成功提示
-            // 存储房间ID
-            this.roomID = response.data.id
-            // 路由跳转（创建房间完成）
-            this.$router.push(`/createRoomDone/${this.spaceID}/${this.roomID}`) // 路由跳转传参（spaceID、roomID到createRoomDone,再从createRoomDone传到roomDetaily）
-          } else {
-            // Notify 失败提示
-            Notify({ type: 'warning', message: '创建失败', duration: 1500 })
-          }
-        })
-        .catch(error => {
-          // 这边要用箭头函数，才可以this引用上下文
-          console.log(error)
-        })
+      // 判断图片是否上传
+      if (
+        this.roomLogo[0] === [] ||
+        this.roomImagesURL === [] ||
+        this.roomLogo[0] === '' ||
+        this.roomImagesURL === '' ||
+        this.roomLogo[0] === undefined ||
+        this.roomImagesURL === undefined
+      ) {
+        // 警告通知
+        Notify({ type: 'warning', message: '请上传图片' })
+      } else {
+        // 请求后端
+        var data = new FormData()
+        // 请求body
+        data.append('sid', this.spaceID) // 房间所属空间ID
+        data.append('name', this.roomName) // 房间名称
+        data.append('logo', this.roomLogo[0]) // 房间logo图片
+        data.append('images', this.roomImagesURL) // 房间详情图片
+        data.append('description', this.roomIntroduced) // 房间介绍
+        data.append('services', this.roomFacilityService) // 设施服务
+        data.append('notice', this.roomAttention) // 预订须知
+        data.append('remark', '')
+        // 请求header
+        var headers = { OpenID: localStorage.getItem('OpenID') }
+        // 发起请求
+        createRoom(data, headers)
+          .then(response => {
+            // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getSpaceList请求，created使用data参数必须是箭头函数，否则报错undefined
+            console.log(JSON.stringify(response))
+            // 判断是否创建成功
+            if (response.msg === '操作成功') {
+              Notify({ type: 'primary', message: '创建成功', duration: 1200 }) // Notify 成功提示
+              // 存储房间ID
+              this.roomID = response.data.id
+              // 路由跳转（创建房间完成）
+              this.$router.push(`/createRoomDone/${this.spaceID}/${this.roomID}`) // 路由跳转传参（spaceID、roomID到createRoomDone,再从createRoomDone传到roomDetaily）
+            } else {
+              // Notify 失败提示
+              Notify({ type: 'warning', message: '创建失败', duration: 1500 })
+            }
+          })
+          .catch(error => {
+            // 这边要用箭头函数，才可以this引用上下文
+            console.log(error)
+          })
+      }
     },
     // 图片上传(logo)
     afterReadLogo(file) {

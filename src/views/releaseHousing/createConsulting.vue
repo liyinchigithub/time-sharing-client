@@ -202,7 +202,7 @@ export default {
   },
   computed: {},
   methods: {
-    // 路由跳转（返回租客广场列表）
+    // 路由跳转（返回商家广场列表）
     onClickLeft() {
       this.$router.push('/home')
       // this.$router.go(-1);// 返回上一页

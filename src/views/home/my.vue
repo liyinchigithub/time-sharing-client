@@ -9,7 +9,7 @@
           <van-image width="90" height="90" lazy-load :src="headimgurl" fit="fill" round />
         </div>
         <!-- 商户名称 -->
-        <div class="mrchant-user-info-merchants-name" @click="toSetting(id)">
+        <div class="mrchant-user-info-customer-name" @click="toSetting(id)">
           <h1>{{ name }}</h1>
         </div>
         <!-- 当前位置（跳转城市页？？？） -->
@@ -255,7 +255,7 @@ export default {
 //   margin-left: 30%;
 //   transform: translate(-50%, -50%);
 // }
-.mrchant-user-info-merchants-name {
+.mrchant-user-info-customer-name {
   position: absolute;
   // width: 100%; // 这个属性会导致页面横向过大
   height: 50%;

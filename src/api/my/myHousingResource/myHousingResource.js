@@ -5,11 +5,11 @@ import request from '@/utils/request'// axios
 
 
 /**
- * @method getMerchantsHousingResource
+ * @method getCustomerHousingResource
  * @deprecated 获取商家所有房源的列表接口
  * @param object data 
  */
-export function getMerchantsHousingResourceList(data, headers) {
+export function getCustomerHousingResourceList(data, headers) {
   return request({
     url: '/api/v1/house/my',
     method: 'post',
@@ -19,7 +19,7 @@ export function getMerchantsHousingResourceList(data, headers) {
 }
 
 /**
- * @method getMerchantsSpaceRoomList
+ * @method getCustomerSpaceRoomList
  * @description 获取商家某个空间下所有房间接口（在mySpace.js中）
  * @param 空间ID
  * @returns object 

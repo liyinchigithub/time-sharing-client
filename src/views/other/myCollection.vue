@@ -21,7 +21,7 @@
               <div class="myCollectionItemList">
                 <div class="card" v-for="(item, index) in myCollectionItemList" :key="index">
                   <div style="margin-top: 5%; margin-left: 5%">
-                    <van-row @click="toMerchantsDetails(item.ID)">
+                    <van-row @click="toCustomerDetails(item.ID)">
                       <!-- 商家图片 -->
                       <van-col span="6"><img :src="item.image" alt="暂无图片" width="80" height="80" /> </van-col>
                       <!-- 商家名称 -->
@@ -46,7 +46,7 @@
                             plain
                             type="danger"
                             style="width: 90px; height: 40px"
-                            @click="deleteMerchants(item.ID)"
+                            @click="deleteCustomer(item.ID)"
                             >删除</van-button
                           >
                         </div>
@@ -147,7 +147,7 @@ export default {
       this.$router.go(-1) // 返回上一页
     },
     // 删除商家
-    deleteMerchants(merchantsID) {
+    deleteCustomer(customerID) {
       Dialog.confirm({
         title: '请确认是否删除',
         message: ''
@@ -157,7 +157,7 @@ export default {
           // on confirm
           // 删除成功提示
           Notify({ type: 'primary', message: '删除成功', duration: 1200 })
-          console.log(`商家ID：${merchantsID}`)
+          console.log(`商家ID：${customerID}`)
           // TODO 请求后端接口，删除收藏中商家ID
 
           // 刷新页面
@@ -187,8 +187,8 @@ export default {
         })
     },
     // 路由跳转（商家详情页）
-    toMerchantsDetails(merchantsID) {
-      this.$router.push(`/merchantsDetaily/${merchantsID}`)
+    toCustomerDetails(customerID) {
+      this.$router.push(`/CustomerDetaily/${customerID}`)
     },
     // 路由跳转（房间详情页）
     toRoomDetails(roomID) {

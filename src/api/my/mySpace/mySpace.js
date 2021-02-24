@@ -22,12 +22,12 @@ export function getSpaceList(data, headers) {
 }
 
 /**
- * @method getMerchantsSpaceRoomList
+ * @method getCustomerSpaceRoomList
  * @description 获取商家某个空间下所有房间接口（其他页面引用：发布房源页、发布咨询单页、我的房源页、房间列表页）
  * @param  data 商家ID、空间ID
  * @returns object 
  * */
-export function getMerchantsSpaceRoomList(data) {
+export function getCustomerSpaceRoomList(data) {
 	return request({
 		url: `/api/`, // 这边/api/路径，是nginx反向代理路径
 		method: 'get'

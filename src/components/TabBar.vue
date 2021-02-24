@@ -8,8 +8,8 @@
     </van-tabbar> -->
     <!-- 写死形式 -->
     <van-tabbar v-model="active" @change="handleChange">
-      <van-tabbar-item to="/home" icon="wap-home-o">租客广场</van-tabbar-item>
-      <van-tabbar-item icon="aim" @click="dialogIsShow">发布</van-tabbar-item>
+      <van-tabbar-item to="/home" icon="wap-home-o">商家广场</van-tabbar-item>
+      <van-tabbar-item icon="aim" @click="dialogIsShow">房源匹配</van-tabbar-item>
       <van-tabbar-item to="/My" icon="user-o">我的</van-tabbar-item>
     </van-tabbar>
     <!-- 底部弹窗 -->

@@ -17,13 +17,13 @@ export const constantRouterMap = [
 				path: '/home',
 				name: 'Home',
 				component: () => import('@/views/home/index'),
-				meta: { title: '租客广场', keepAlive: false }
+				meta: { title: '商家广场', keepAlive: false }
 			},
 			{
 				path: '/release',
 				name: 'Release',
 				component: () => import('@/views/home/release'),
-				meta: { title: '发布', keepAlive: false }
+				meta: { title: '房源匹配', keepAlive: false }
 			},
 			{
 				path: '/my',
@@ -240,19 +240,19 @@ export const constantRouterMap = [
 		component: () => import('@/views/other/myCollection')
 	},
 	{
-		path: '/merchantsDetaily/:merchantsDetaily',
-		name: 'MerchantsDetaily',
-		component: () => import('@/views/other/merchantsDetaily')
+		path: '/customerDetaily/:customerDetaily',
+		name: 'CustomerDetaily',
+		component: () => import('@/views/other/customerDetaily')
 	},
 	{
-		path: '/merchantsRoomList/:merchantsID',
-		name: 'MerchantsRoomList',
-		component: () => import('@/views/other/merchantsRoomList')
+		path: '/customerRoomList/:customerID',
+		name: 'CustomerRoomList',
+		component: () => import('@/views/other/customerRoomList')
 	},
 	{
-		path: '/merchantsRoomDetaily/:roomID',
-		name: 'MerchantsRoomDetaily',
-		component: () => import('@/views/other/merchantsRoomDetaily')
+		path: '/customerRoomDetaily/:roomID',
+		name: 'CustomerRoomDetaily',
+		component: () => import('@/views/other/customerRoomDetaily')
 	},
 	{
 		path: '/myRelease/',

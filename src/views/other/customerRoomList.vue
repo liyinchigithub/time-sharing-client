@@ -59,7 +59,7 @@
 import { Toast, Dialog, Notify } from 'vant'
 import { getRoomList } from '@/api/my/mySpace/room/roomList.js'
 export default {
-  name: 'merchantsRoomList', // 商家房间列表
+  name: 'customerRoomList', // 商家房间列表
   components: {},
   data() {
     return {

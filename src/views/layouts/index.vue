@@ -21,14 +21,14 @@ export default {
     return {
       tabbars: [
         {
-          title: '租客广场',
+          title: '商家广场',
           to: {
             name: 'Home'
           },
           icon: 'wap-home-o'
         },
         {
-          title: '发布',
+          title: '房源匹配',
           to: {
             name: 'Release' // 注意大小写，与src\router\router.config.js name一致
           },

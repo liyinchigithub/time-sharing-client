@@ -86,25 +86,50 @@ export default {
           // TODO 请求后端接口，判断是否注册（）
           // 请求header
           var headers = { OpenID: localStorage.getItem('OpenID') }
-          // 发起请求
-          getUserInfo(headers)
-            .then(getUserInfoResponse => {
-              console.log(JSON.stringify(getUserInfoResponse))
-              // alert(getUserInfoResponse.hasOwnProperty('data'))
-              // 未注册（路由跳转进入注册页=>完善手机页）通过判断响应body是否包含data，包含data说明已注册绑定手机号
-              if (!getUserInfoResponse.hasOwnProperty('data')) {
-                this.$router.push('/register')
-              } else {
+          // 判断是否租客端
+          if (this.$route.query.isCustomer) {
+            // 是租客端
+            // 发起请求
+            getUserInfoCustomer(headers)
+              .then(getUserInfoResponse => {
                 console.log(JSON.stringify(getUserInfoResponse))
-                // 已注册（提交商家名称和联系方式）,路由跳转（首页）
-                // this.$router.push('/home')// 这边使用路由跳转，url会显示回调code参数，后续路由跳转仍带着这个参数
-                window.location.href = `${config.baseUrl}/#/home`
-              }
-            })
-            .catch(error => {
-              console.log(error)
-              alert(error)
-            })
+                // alert(getUserInfoResponse.hasOwnProperty('data'))
+                // 未注册（路由跳转进入注册页=>完善手机页）通过判断响应body是否包含data，包含data说明已注册绑定手机号
+                if (!getUserInfoResponse.hasOwnProperty('data')) {
+                  this.$router.push('/register')
+                } else {
+                  console.log(JSON.stringify(getUserInfoResponse))
+                  // 已注册（提交商家名称和联系方式）,路由跳转（首页）
+                  // this.$router.push('/home')// 这边使用路由跳转，url会显示回调code参数，后续路由跳转仍带着这个参数
+                  window.location.href = `${config.baseUrl}/#/home` // 注意：这边使用路径是含customer，不用${config.baseUrl}
+                }
+              })
+              .catch(error => {
+                console.log(error)
+                alert(error)
+              })
+          } else {
+            // 不是租客端
+            // 发起请求
+            getUserInfo(headers)
+              .then(getUserInfoResponse => {
+                console.log(JSON.stringify(getUserInfoResponse))
+                // alert(getUserInfoResponse.hasOwnProperty('data'))
+                // 未注册（路由跳转进入注册页=>完善手机页）通过判断响应body是否包含data，包含data说明已注册绑定手机号
+                if (!getUserInfoResponse.hasOwnProperty('data')) {
+                  this.$router.push('/register')
+                } else {
+                  console.log(JSON.stringify(getUserInfoResponse))
+                  // 已注册（提交商家名称和联系方式）,路由跳转（首页）
+                  // this.$router.push('/home')// 这边使用路由跳转，url会显示回调code参数，后续路由跳转仍带着这个参数
+                  window.location.href = `https://pms.bchat.top/#/home`
+                }
+              })
+              .catch(error => {
+                console.log(error)
+                alert(error)
+              })
+          }
         }
       })
       .catch(err => {

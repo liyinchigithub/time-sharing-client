@@ -11,7 +11,7 @@
         <img src="../../assets/image/evaluate.png" style="width: 100%; height: 100%"
       /></van-uploader>
       <div class="img-box">
-        <img class="image" :src="merchantsUploadImages" v-show="isShowMerchantsThumbnail" />
+        <img class="image" :src="customerUploadImages" v-show="isShowCustomerThumbnail" />
       </div> -->
     </div>
     <!-- 表单 -->
@@ -21,7 +21,7 @@
         <van-field name="Logo" label="商家头像">
           <template #input>
             <van-uploader
-              v-model="merchantsUploadImagesPre"
+              v-model="customerUploadImagesPre"
               :after-read="afterReadLogo"
               :multiple="false"
               :max-count="1"
@@ -31,17 +31,17 @@
           </template>
         </van-field>
         <van-field
-          v-model="merchantsUsername"
-          name="merchantsUsername"
+          v-model="customerUsername"
+          name="customerUsername"
           label="商家名称"
           placeholder="请输入商家名称"
           :rules="[{ required: true, message: '商家名称不能为空' }]"
           maxlength="15"
         />
         <van-field
-          v-model="merchantsTel"
+          v-model="customerTel"
           type="tel"
-          name="merchantsTel"
+          name="customerTel"
           label="联系方式"
           placeholder="请输入联系方式"
           :rules="[{ required: true, message: '联系方式不能为空' }]"
@@ -57,7 +57,7 @@
 <script>
 /* eslint-disable */
 import { Toast } from 'vant'
-import { modifyMerchantInformation } from '@/api/register/register.js'
+import { modifyCustomerInformation } from '@/api/register/register.js'
 import { getUserInfo } from '@/api/my/userinfo/userinfo.js'
 import axios from 'axios'
 export default {
@@ -65,13 +65,13 @@ export default {
   components: {},
   data() {
     return {
-      merchantsUsername: '', // 商户名称
-      merchantsTel: '', // 商户手机
+      customerUsername: '', // 商户名称
+      customerTel: '', // 商户手机
       // 头像上传
-      isShowMerchantsThumbnail: false, // 是否显示文件上传缩略图
-      merchantsImageName: '', // 文件上传 缩略图文件名称
-      merchantsUploadImagesPre: [], // 图片预览地址
-      merchantsUploadImages: '' // 图片地址
+      isShowCustomerThumbnail: false, // 是否显示文件上传缩略图
+      customerImageName: '', // 文件上传 缩略图文件名称
+      customerUploadImagesPre: [], // 图片预览地址
+      customerUploadImages: '' // 图片地址
     }
   },
   computed: {},
@@ -79,17 +79,25 @@ export default {
     // 表单提交（登录）
     onSubmit(values) {
       console.log('submit', values)
+       if (
+        this.customerUploadImages === [] ||
+        this.customerUploadImage === '' ||
+        this.customerUploadImages === undefined
+      ) {
+        // 警告通知
+        Notify({ type: 'warning', message: '请上传图片' })
+      } else {
       //  TODO 请求后端修改用户信息
       //  请求后端，获取空间列表
       var data = new FormData()
       // 请求body
-      data.append('phone', values.merchantsTel)
-      data.append('name', values.merchantsUsername)
-      data.append('headimgurl', this.merchantsUploadImages)
+      data.append('phone', values.customerTel)
+      data.append('name', values.customerUsername)
+      data.append('headimgurl', this.customerUploadImages)
       // 请求header
       var headers = { OpenID: localStorage.getItem('OpenID') }
       // 发起请求
-      modifyMerchantInformation(data, headers)
+      modifyCustomerInformation(data, headers)
         .then(response => {
           // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getSpaceList请求，created使用data参数必须是箭头函数，否则报错undefined
           console.log(JSON.stringify(response.rows))
@@ -105,6 +113,7 @@ export default {
         .catch(error => {
           console.log(error)
         })
+        } 
     },
     // 图片上传
     afterReadLogo(file) {
@@ -139,8 +148,8 @@ export default {
             // Toast
             Toast.success('图片上传成功')
             // 响应body返回图片存储服务器所在路径
-            console.log('this.merchantsUploadImages', response.data.data)
-            this.merchantsUploadImages = response.data.data
+            console.log('this.customerUploadImages', response.data.data)
+            this.customerUploadImages = response.data.data
           }
         })
         .catch(error => {
@@ -189,7 +198,7 @@ export default {
     failed() {
       Notify({ type: 'warning', message: '请填写完整', duration: 1200 })
     },
-    // 路由跳转（返回租客广场列表）
+    // 路由跳转（返回商家广场列表）
     onClickLeft() {
       this.$router.push('/my')
       // this.$router.go(-1);// 返回上一页
@@ -222,17 +231,17 @@ export default {
           // this.remark = response.data.remark //
           // this.params = response.data.params //
           // this.id = response.data.id //
-          this.merchantsUsername = response.data.name // 商家名称
-          this.merchantsTel = response.data.phone // 商家联系方式
-          // this.merchantsTel = response.data.mobile // 商家联系方式
+          this.customerUsername = response.data.name // 商家名称
+          this.customerTel = response.data.phone // 商家联系方式
+          // this.customerTel = response.data.mobile // 商家联系方式
           // this.unionid = response.data.unionid //
           // this.openid = response.data.openid //
           // this.sex = response.data.sex //
           // this.country = response.data.country //
           // this.province = response.data.province //
           // this.language = response.data.language //
-          this.merchantsUploadImagesPre.push({ url: response.data.headimgurl }) // 商家头像(注意：这边是对象格式)
-          this.merchantsUploadImages = response.data.headimgurl
+          this.customerUploadImagesPre.push({ url: response.data.headimgurl }) // 商家头像(注意：这边是对象格式)
+          this.customerUploadImages = response.data.headimgurl
           // this.subscribe = response.data.subscribe //
           // this.subscribeTime = response.data.subscribeTime //
           // this.subscribed = response.data.subscribed //
