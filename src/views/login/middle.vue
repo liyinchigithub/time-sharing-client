@@ -1,4 +1,4 @@
-// 中间页
+// 中间页,注意：实际是跳商家端项目的middle，租客端这边middle没有用到
 <template>
   <div>
     <!-- 栅格 -->
@@ -87,7 +87,8 @@ export default {
           // 请求header
           var headers = { OpenID: localStorage.getItem('OpenID') }
           // 判断是否租客端
-          if (this.$route.query.isCustomer) {
+          var isCustomer=Boolean(this.$route.query.isCustomer)
+          if (isCustomer) {
             // 是租客端
             // 发起请求
             getUserInfoCustomer(headers)
