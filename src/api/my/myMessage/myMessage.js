@@ -6,11 +6,11 @@ import request from '@/utils/request';// axios
 //【我的消息页】调用接口
 
 /**
- * @method getMessageList POST
+ * @method getMessageItemList POST
  * @deprecated 获取三种消息类型列表接口
  * @param object data 
  */ 
-export function getMessageList(page) {
+export function getMessageItemList(page) {
   return request({
     url: `/api/mock5?page=${page}`,
     method: 'get',

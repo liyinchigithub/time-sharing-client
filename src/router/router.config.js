@@ -20,9 +20,9 @@ export const constantRouterMap = [
 				meta: { title: '商家广场', keepAlive: false }
 			},
 			{
-				path: '/release',
-				name: 'Release',
-				component: () => import('@/views/home/release'),
+				path: '/housingMatch',
+				name: 'HousingMatch',
+				component: () => import('@/views/home/housingMatch'),
 				meta: { title: '房源匹配', keepAlive: false }
 			},
 			{

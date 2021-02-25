@@ -72,3 +72,18 @@ export function getHousingResourceDetail(data, headers) {
     method: 'post',
   })
 }
+/**
+ * @method  getMerchantsHousingResourceList
+ * @description 获取房源详情页的信息接口
+ * @param data 房源ID
+ * @param headers 商家OpenID
+ * @returns object 
+ * */
+export function getMerchantsHousingResourceList(data, headers) {
+  return request({
+    url: `/api/v1/house/get`, // 这边/api/路径，是nginx反向代理路径
+    headers: headers,
+    data: data,
+    method: 'post',
+  })
+}
