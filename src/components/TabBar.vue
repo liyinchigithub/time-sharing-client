@@ -9,22 +9,9 @@
     <!-- 写死形式 -->
     <van-tabbar v-model="active" @change="handleChange">
       <van-tabbar-item to="/home" icon="wap-home-o">商家广场</van-tabbar-item>
-      <van-tabbar-item icon="aim" @click="dialogIsShow">房源匹配</van-tabbar-item>
+      <van-tabbar-item  to="/housingMatch" icon="aim" >房源匹配</van-tabbar-item>
       <van-tabbar-item to="/My" icon="user-o">我的</van-tabbar-item>
     </van-tabbar>
-    <!-- 底部弹窗 -->
-    <van-popup v-model="dialogShow" round closeable position="bottom" :style="{ height: '30%' }">
-      <div>
-        <div class="popup1-1" @click="toReleaseHousing">
-          <img src="../assets/image/releaseHousing.png" width="100" height="100" alt="" srcset="" />
-        </div>
-        <div class="popup1-2" @click="toReleaseHousing">发布房源</div>
-        <div class="popup2-1" @click="toCreateFavorite">
-          <img src="../assets/image/releaseHousing.png" width="100" height="100" alt="" srcset="" />
-        </div>
-        <div class="popup2-2" @click="toCreateFavorite">创建咨询单</div>
-      </div>
-    </van-popup>
   </div>
 </template>
 <script>
@@ -58,18 +45,7 @@ export default {
       // 存储当前tabbar选中值
       window.localStorage.setItem('tabCurrentActive', value)
     },
-    // 底部弹出层显示
-    dialogIsShow() {
-      this.dialogShow = true
-    },
-    // 路由跳转（发布房源页）
-    toReleaseHousing() {
-      this.$router.push('/releaseHousing')
-    },
-    // 路由跳转（创建咨询单页）
-    toCreateFavorite() {
-      this.$router.push('/createFavorite')
-    }
+   
   },
   computed: {
     CurrentActive() {
