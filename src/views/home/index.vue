@@ -87,6 +87,7 @@
 import { PullRefresh, List, Dialog, Toast, Pagination, Notify } from 'vant'
 import { getRequirementList } from '@/api/home/home.js'
 import { getCategoryList } from '@/api/common/common.js'
+import { wxGetSignature } from '@/api/login/login.js' // 引入后端api
 export default {
   name: 'Home', // 首页
   data() {
@@ -322,6 +323,118 @@ export default {
     // 页面加载完后，调整上拉加载框的高度
     // let winHeight = document.documentElement.clientHeight //视口大小
     // document.getElementById('list-content').style.minHeight = winHeight - 82 + 'px'
+    // 当前页面域名
+    this.signatureUrl = window.location.href.split('#')[0]
+    console.log(this.signatureUrl)
+    // GET 请求后端进行签名,存储签名参数
+    wxGetSignature({ url: window.location.href.split('#')[0] })
+      .then(response => {
+        console.log(`signature：${JSON.stringify(response)}`)
+        // 存储签名信息
+        localStorage.setItem('wxSignature', JSON.stringify(response.data))
+        this.timestamp = response.data.timestamp
+        this.nonceStr = response.data.nonceStr
+        this.signature = response.data.signature
+        //  JSSDK 配置、初始化（调用函数）
+        wx.config({
+          debug: false,
+          appId: config.APPID,
+          timestamp: this.timestamp,
+          nonceStr: this.nonceStr,
+          signature: this.signature,
+          jsApiList: ['checkJsApi', 'getLocation']
+        })
+        var that = this
+        // wx.config信息验证后会执行wx.ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+        wx.ready(function () {
+          // 检查配置结果
+          wx.checkJsApi({
+            jsApiList: ['getLocation'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+            // 成功
+            success: function (res) {
+              // alert(res.checkResult.getLocation)
+              if (res.checkResult.getLocation == false) {
+                Dialog({
+                  message: '你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！'
+                })
+                return
+              }
+            }
+          })
+
+          // 获取当前地理位置
+          wx.getLocation({
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            // 定位成功
+            success: function (res) {
+              var latitude = res.latitude // 纬度，浮点数，范围为90 ~ -90
+              var longitude = res.longitude // 经度，浮点数，范围为180 ~ -180。
+              var speed = res.speed // 速度，以米/每秒计
+              var accuracy = res.accuracy // 位置精度
+              console.log({ latitude: latitude, longitude: longitude, speed: speed, accuracy: accuracy })
+              //
+              geocoder({ lat: latitude, lng: longitude })
+                .then(function (response) {
+                  console.log(JSON.stringify(response.data))
+                  // 如果当前位置和localStorage currentCity位置一样，则不弹定位确认窗；如果不一样时，才弹定位确认窗是否使用当前定位位置
+                  if (that.currentCity.indexOf(response.data.c) != -1) {
+                    // 包含（说明所在城市和本地缓存城市一样），不弹定位窗
+                  } else {
+                    // 弹窗确认是否使用定位到的城市
+                    Dialog.confirm({
+                      title: `当前定位城市`,
+                      message: `${response.data.p + response.data.c + response.data.d} 确认是否使用`
+                    })
+                      .then(() => {
+                        // on confirm
+                        that.currentCity = response.data.c
+                        localStorage.setItem('currentCity', that.currentCity)
+                      })
+                      .catch(() => {
+                        // on cancel
+                        // 使用默认城市：杭州
+                      })
+                  }
+                })
+                .catch(function (error) {
+                  console.log(error)
+                })
+            },
+            // 定位失败
+            fail: function (res) {
+              Dialog({
+                message: '定位失效，请手动选择'
+              })
+            },
+            // 取消定位
+            cancel: function (res) {
+              Dialog({
+                message: '未授权定位，请手动选择'
+              })
+            }
+          })
+        })
+        // wx.wx.config信息验证后会执行wx.error方法
+        wx.error(function (res) {
+          // // wx.config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+          // Toast.fail('登录超时，请重新登录')
+          // Notify({ type: 'warning', message: '登录超时，请重新登录', duration: 2000 })
+          // setTimeout(() => {
+          //   that.$router.push('/login') // 注意：这边微信JSSDK重写了this
+          // }, 1500)
+          console.log(res)
+        })
+      })
+      .catch(err => {
+        console.log(err)
+        // // 如果授权失败
+        // Toast.fail('登录超时，请重新登录')
+        // Notify({ type: 'warning', message: '登录超时，请重新登录', duration: 2000 })
+        // setTimeout(() => {
+        //   that.$router.push('/login') // 注意：这边微信JSSDK重写了this
+        // }, 1500)
+        console.log('登录超时，请重新登录', err)
+      })
   }
 }
 </script>

@@ -164,7 +164,7 @@ export default {
           signature: this.signature,
           jsApiList: ['checkJsApi', 'getLocation']
         })
-        var that=this;
+        var that = this
         // wx.config信息验证后会执行wx.ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
         wx.ready(function () {
           // 检查配置结果
@@ -196,21 +196,25 @@ export default {
               geocoder({ lat: latitude, lng: longitude })
                 .then(function (response) {
                   console.log(JSON.stringify(response.data))
-
-                  // 弹窗确认是否使用定位到的城市
-                  Dialog.confirm({
-                    title: `当前定位城市`,
-                    message: `${response.data.p + response.data.c + response.data.d} 确认是否使用`
-                  })
-                    .then(() => {
-                      // on confirm
-                        that.currentCity=response.data.c;
-                        localStorage.setItem("currentCity",that.currentCity)
+                  // 如果当前位置和localStorage currentCity位置一样，则不弹定位确认窗；如果不一样时，才弹定位确认窗是否使用当前定位位置
+                  if (that.currentCity.indexOf(response.data.c) != -1) {
+                    // 包含（说明所在城市和本地缓存城市一样），不弹定位窗
+                  } else {
+                    // 弹窗确认是否使用定位到的城市
+                    Dialog.confirm({
+                      title: `当前定位城市`,
+                      message: `${response.data.p + response.data.c + response.data.d} 确认是否使用`
                     })
-                    .catch(() => {
-                      // on cancel
-                      // 使用默认城市：杭州
-                    })
+                      .then(() => {
+                        // on confirm
+                        that.currentCity = response.data.c
+                        localStorage.setItem('currentCity', that.currentCity)
+                      })
+                      .catch(() => {
+                        // on cancel
+                        // 使用默认城市：杭州
+                      })
+                  }
                 })
                 .catch(function (error) {
                   console.log(error)
