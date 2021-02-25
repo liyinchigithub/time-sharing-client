@@ -1,8 +1,7 @@
 <!-- 房源匹配 -->
 <template>
   <div>
-    <!-- 顶栏 -->
-    <van-nav-bar title="房源匹配" left-arrow @click-left="onClickLeft" :fixed="true" :border="true" />
+   
     <!-- 定位icon、当前城市 -->
     <div class="currentCity" @click="toChangeCity">
       <!-- TODO 默认城市：存储微信授权后JSSDK请求用户地理位置经纬度 -->
@@ -318,11 +317,6 @@ export default {
     // 路由跳转（切换城市页）
     toChangeCity() {
       this.$router.push('/changeCity')
-    },
-    // 路由跳转（返回首页）
-    onClickLeft() {
-      this.$router.push('/my')
-      // this.$router.go(-1);// 返回上一页
     },
     // 路由跳转（房源单详情页）
     toHousingResourceDetails(housingResourceID) {
