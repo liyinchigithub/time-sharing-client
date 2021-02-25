@@ -125,7 +125,7 @@
 <script>
 /* eslint-disable */
 import { Toast, Dialog, Notify } from 'vant'
-import { getMessageList } from '@/api/my/myMessage/myMessage.js'
+import { getMessageItemList } from '@/api/my/myMessage/myMessage.js'
 export default {
   name: 'message', // 消息页
   components: {},
