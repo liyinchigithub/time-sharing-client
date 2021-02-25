@@ -2,7 +2,7 @@
 <template>
   <div>
     <!-- 顶栏 -->
-    <van-nav-bar title="发布房源" left-arrow @click-left="onClickLeft" :fixed="true" :border="true" />
+    <van-nav-bar title="房源匹配" left-arrow @click-left="onClickLeft" :fixed="true" :border="true" />
     <!-- 定位icon、当前城市 -->
     <div class="currentCity" @click="toChangeCity">
       <!-- TODO 默认城市：存储微信授权后JSSDK请求用户地理位置经纬度 -->
