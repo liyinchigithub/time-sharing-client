@@ -325,7 +325,7 @@ export default {
   beforeMount() {},
   mounted() {
     // Vue给单独页面添加背景色
-    document.body.style.backgroundColor = '#F5F5F5'
+    document.body.style.backgroundColor = '#FFFFFF'
     // 当前页面域名
     this.signatureUrl = window.location.href.split('#')[0]
     console.log(this.signatureUrl)
