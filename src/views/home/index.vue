@@ -88,6 +88,7 @@ import { PullRefresh, List, Dialog, Toast, Pagination, Notify } from 'vant'
 import { getRequirementList } from '@/api/home/home.js'
 import { getCategoryList } from '@/api/common/common.js'
 import { wxGetSignature } from '@/api/login/login.js' // 引入后端api
+import config from '../../config/index' // 引入环境配置参数
 export default {
   name: 'Home', // 首页
   data() {
@@ -115,7 +116,15 @@ export default {
       loading: false, // 是否显示加载中
       finished: false, // 是否显示加载完成
       // 遮罩层
-      overlayShow: false
+      overlayShow: false,
+      // JSSDK参数
+      appid: config.APPID,
+      timestamp: '',
+      nonceStr: '',
+      signature: '',
+      signatureUrl: '', // 签名url
+      latitude: 0, // 经度
+      longitude: 0 // 维度
     }
   },
   methods: {
@@ -313,16 +322,8 @@ export default {
   },
   beforeMount() {},
   mounted() {
-    // 数据加载后,栅格
-    setTimeout(() => {
-      this.skeletonShow = false
-      this.cardShow = true
-    }, 1000)
     // Vue给单独页面添加背景色
-    document.body.style.backgroundColor = '#FFFFFF'
-    // 页面加载完后，调整上拉加载框的高度
-    // let winHeight = document.documentElement.clientHeight //视口大小
-    // document.getElementById('list-content').style.minHeight = winHeight - 82 + 'px'
+    document.body.style.backgroundColor = '#F5F5F5'
     // 当前页面域名
     this.signatureUrl = window.location.href.split('#')[0]
     console.log(this.signatureUrl)
