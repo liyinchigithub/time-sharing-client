@@ -40,7 +40,7 @@ export default {
   methods: {
     // 路由跳转【注册页】
     toRegister() {
-      this.$router.push('/Register')
+      this.$router.push('/register')
     },
     // 路由跳转【微信登录页】
     toWechatLogin() {

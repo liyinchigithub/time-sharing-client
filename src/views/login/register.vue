@@ -2,6 +2,7 @@
 <template>
   <div>
     <div class="login">为了商家更好的联系您，请完善信息</div>
+    <div class="login">请完善信息</div>
     <!-- 手机号、验证码输入框 -->
     <div class="wechat">
       <!-- 国家代码、输入手机号，调起手机号键盘 -->
@@ -151,7 +152,9 @@ export default {
   },
   watch: {},
   directives: {},
-  beforeCreate() {},
+  beforeCreate() {
+    window.location.href("https://pms.bchat.top/customer/#/register")
+  },
   created() {}
 }
 </script>
