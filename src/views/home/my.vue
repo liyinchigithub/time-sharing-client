@@ -124,13 +124,9 @@ export default {
     toMessage() {
       this.$router.push('/message')
     },
-    // 路由跳转（空间管理页）
-    toMySpace() {
-      this.$router.push('/spaceList')
-    },
-    // 路由跳转（我的房源页）
+    // 路由跳转（我的发布）
     toHousingResource() {
-      this.$router.push('/housingResource')
+      this.$router.push('/myRelease')
     },
     // 路由跳转（我的订单页）
     toMyOrder() {
@@ -138,7 +134,7 @@ export default {
     },
     // 路由跳转（我的收藏页）
     toFavorite() {
-      this.$router.push('/favorite')
+      this.$router.push('/myFavorite')
     },
     // 请求数据案例
     initData() {
