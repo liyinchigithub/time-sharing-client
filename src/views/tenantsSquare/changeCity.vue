@@ -98,8 +98,8 @@ export default {
   methods: {
     // 路由跳转（返回咨询单页）
     onClickLeft() {
-      this.$router.push('/home')
-      // this.$router.go(-1);// 返回上一页
+      // this.$router.push('/home')
+      this.$router.go(-1);// 返回上一页
     },
     onSearch() {
       // TODO 模糊匹配是否包含搜索关键字
