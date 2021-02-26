@@ -85,7 +85,7 @@
 <script>
 /* eslint-disable */
 import { PullRefresh, List, Dialog, Toast, Pagination, Notify } from 'vant'
-import { getRequirementList } from '@/api/home/home.js' // 引入api
+import { getResidentMerchantsList } from '@/api/home/home.js' // 引入api
 import { getCategoryList } from '@/api/common/common.js' // 引入api
 import wx from 'weixin-js-sdk' // 引入微信网页SDK
 import config from '../../config/index' // 引入环境配置参数

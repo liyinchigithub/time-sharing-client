@@ -8,8 +8,8 @@
       <!-- 图片（轮播图） -->
       <div class="Mine-categories-swipe">
         <van-swipe class="my-swipe" indicator-color="white" :autoplay="2000">
-          <van-swipe-item v-for="(url, index) in consultingImage" :key="index">
-            <img v-lazy="url" @click="getImg(consultingImage, index)" />
+          <van-swipe-item v-for="(url, index) in favoriteImage" :key="index">
+            <img v-lazy="url" @click="getImg(favoriteImage, index)" />
           </van-swipe-item>
         </van-swipe>
       </div>
@@ -41,7 +41,7 @@
         </div>
         <!-- 创建时间 -->
         <div style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px">
-          <div>创建时间：{{ consultingCreated }}</div>
+          <div>创建时间：{{ favoriteCreated }}</div>
         </div>
       </div>
     </div>
@@ -51,20 +51,19 @@
 <script>
 /* eslint-disable */
 import { Toast, Dialog, Notify, ImagePreview } from 'vant'
-import { getMyFavoriteDetail } from '@/api/my/myFavorite/myFavorite.js'
+import { getMyFavoriteLis, favoriteAddSpace, favoriteAddRoom, favoriteDelete } from '@/api/my/myFavorite/myFavorite.js'
 import FormData from 'form-data' // 引入content-type为form-data
-import SpaceDetaily from '../mySpace/spaceDetaily.vue'
 export default {
-  name: 'consultingDetail', // 咨询单详情页
-  components: { SpaceDetaily },
+  name: 'myFavoriteDetail', // 我的收藏详情页
+  components: {},
   data() {
     return {
-      consultingID: '', // 咨询单ID
-      consultingName: '', // 咨询单名称
-      consultingImage: '', // 咨询单图片(房间图片)
-      consultingStatus: '', // 咨询单状态（1已同意、2已拒绝、3已失效）
+      favoriteID: '', // 咨询单ID
+      favoriteName: '', // 咨询单名称
+      favoriteImage: '', // 咨询单图片(房间图片)
+      favoriteStatus: '', // 咨询单状态（1已同意、2已拒绝、3已失效）
       LeasableTime: '', // 咨询单可租赁时间段
-      consultingCreated: '', // 咨询单创建时间
+      favoriteCreated: '', // 咨询单创建时间
       spaceName: '', // 空间
       roomName: '', // 房间
       priceRange: 0, // 价格范围
@@ -78,9 +77,9 @@ export default {
   },
   computed: {},
   methods: {
-    // 路由跳转（返回咨询单页）
+    // 路由跳转（返回我的收藏页）
     onClickLeft() {
-      this.$router.push('/consulting')
+      this.$router.push('/myFavorite')
       //  this.$router.go(-1);// 返回上一页
     },
     // vant 轮播图 图片预览
@@ -99,26 +98,26 @@ export default {
   directives: {},
   created() {
     // 接收路由地址传参
-    this.consultingID = this.$route.params.consultingID
-    console.log(`咨询单ID：${this.consultingID}`)
+    this.favoriteID = this.$route.params.favoriteID
+    console.log(`咨询单ID：${this.favoriteID}`)
     // TODO 请求后端接口，咨询单ID查询咨询单信息
     var data = new FormData()
     // 请求body
-    data.append('id', this.consultingID)
+    data.append('id', this.favoriteID)
     // 请求header
     var headers = { OpenID: localStorage.getItem('OpenID') }
-    getConsultingDetail(data, headers)
+    getFavoriteDetail(data, headers)
       .then(response => {
-        this.consultingImage = response.data.room.images.split(',')
+        this.favoriteImage = response.data.room.images.split(',')
         this.spaceName = response.data.space.name // 空间名称
         this.roomName = response.data.room.name // 房间名称
         this.priceRange = response.data.price // 价格范围
         this.sellingPrice = response.data.income // 售卖价格
         this.mobile = response.data.mobile // 手机号
         this.description = response.data.description // 手机号
-        this.consultingStatus = response.data.status //
+        this.favoriteStatus = response.data.status //
         this.LeasableTime = `${response.data.fromTime} 至 ${response.data.toTime}` // 房源时间段（可租赁时间段）
-        this.consultingCreated = response.data.created // 创建时间
+        this.favoriteCreated = response.data.created // 创建时间
         this.tags = response.tags.split(',') // 关键标签
         this.spaceObject = response.data.space // 咨询单关联的空间信息
         this.roomObject = response.data.room // 咨询单关联的房间信息
@@ -147,7 +146,7 @@ export default {
   margin-top: 15%;
 }
 .card {
-  color:black;
+  color: black;
   font-size: 15px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   // position: absolute;

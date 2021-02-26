@@ -74,16 +74,6 @@ export const constantRouterMap = [
 		component: () => import('@/views/login/wechatLogin')
 	},
 	{
-		path: '/about',
-		name: 'About',
-		component: () => import('@/views/my/about/about')
-	},
-	{
-		path: '/businessInformation',
-		name: 'BusinessInformation',
-		component: () => import('@/views/my/businessInformation/businessInformation')
-	},
-	{
 		path: '/myFavorite',
 		name: 'MyFavorite',
 		component: () => import('@/views/my/myFavorite/myFavorite')
@@ -134,64 +124,19 @@ export const constantRouterMap = [
 		component: () => import('@/views/my/myOrder/orderDetail')
 	},
 	{
-		path: '/spaceList',
-		name: 'SpaceList',
-		component: () => import('@/views/my/mySpace/spaceList')
+		path: '/myRelease',
+		name: 'MyRelease',
+		component: () => import('@/views/my/myRelease/myRelease')
 	},
 	{
-		path: '/createSpace',
-		name: 'CreateSpace',
-		component: () => import('@/views/my/mySpace/createSpace')
-	},
-	{
-		path: '/editSpace/:spaceID',
-		name: 'EditSpace',
-		component: () => import('@/views/my/mySpace/editSpace')
-	},
-	{
-		path: '/spaceDetaily/:spaceID',
-		name: 'SpaceDetaily',
-		component: () => import('@/views/my/mySpace/spaceDetaily')
-	},
-	{
-		path: '/createSpaceDone/:spaceID',
-		name: 'CreateSpaceDone',
-		component: () => import('@/views/my/mySpace/createSpaceDone')
-	},
-	{
-		path: '/createRoom/:spaceID',
-		name: 'CreateRoom',
-		component: () => import('@/views/my/mySpace/createRoom')
-	},
-	{
-		path: '/roomDetaily/:spaceID/:roomID',
-		name: 'RoomDetaily',
-		component: () => import('@/views/my/mySpace/roomDetaily')
-	},
-	{
-		path: '/createRoomDone/:spaceID/:roomID',
-		name: 'CreateRoomDone',
-		component: () => import('@/views/my/mySpace/createRoomDone')
-	},
-	{
-		path: '/roomList/:spaceID',
-		name: 'RoomList',
-		component: () => import('@/views/my/mySpace/roomList')
+		path: '/myReleaseRequireDetails/:requireID',
+		name: 'MyReleaseRequireDetails',
+		component: () => import('@/views/my/myRelease/myReleaseRequireDetails')
 	},
 	{
 		path: '/setting',
 		name: 'Setting',
 		component: () => import('@/views/my/setting/setting')
-	},
-	{
-		path: '/releaseHousing',
-		name: 'ReleaseHousing',
-		component: () => import('@/views/releaseHousing/releaseHousing')
-	},
-	{
-		path: '/releaseHousingResult',
-		name: 'ReleaseHousingResult',
-		component: () => import('@/views/releaseHousing/releaseHousingResult')
 	},
 	{
 		path: '/tenantRequirementsDetails/:requireInfo',
@@ -218,45 +163,5 @@ export const constantRouterMap = [
 		name: 'PushH5ResultResolve',
 		component: () => import('@/views/pushH5/pushH5ResultResolve')
 	},
-	// 租户端
-	{
-		path: '/housingMatch',
-		name: 'HousingMatch',
-		component: () => import('@/views/other/housingMatch')
-	},
-	{
-		path: '/orderUser/:housingResourceID/:spaceID/:roomID',
-		name: 'OrderUser',
-		component: () => import('@/views/other/orderUser')
-	},
-	{
-		path: '/housingResourceDetailsUser/:housingResourceID/:spaceID/:roomID',
-		name: 'HousingResourceDetailsUser',
-		component: () => import('@/views/other/housingResourceDetailsUser')
-	},
-	{
-		path: '/myCollection',
-		name: 'MyCollection',
-		component: () => import('@/views/other/myCollection')
-	},
-	{
-		path: '/customerDetaily/:customerDetaily',
-		name: 'CustomerDetaily',
-		component: () => import('@/views/other/customerDetaily')
-	},
-	{
-		path: '/customerRoomList/:customerID',
-		name: 'CustomerRoomList',
-		component: () => import('@/views/other/customerRoomList')
-	},
-	{
-		path: '/customerRoomDetaily/:roomID',
-		name: 'CustomerRoomDetaily',
-		component: () => import('@/views/other/customerRoomDetaily')
-	},
-	{
-		path: '/myRelease/',
-		name: 'MyRelease',
-		component: () => import('@/views/other/myRelease')
-	}
+
 ];

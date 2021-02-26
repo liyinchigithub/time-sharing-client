@@ -7,26 +7,31 @@ import request from '@/utils/request';// axios
 
 /**
  * @method getMessageItemList POST
- * @deprecated 获取三种消息类型列表接口
- * @param object data 
+ * @deprecated  我的消息列表
+ * @param  data  int pageNum 1
+ * @param  data  int pageSize 1000
  */ 
-export function getMessageItemList(page) {
+export function getMessageItemList(data,headers) {
   return request({
-    url: `/api/mock5?page=${page}`,
-    method: 'get',
+    url: `/api/v1/message/list`,
+    method: 'post',
+    headers: headers,
+    data: data
   })
 }
 
 /**
  * @method getMessageDetail POST
- * @deprecated 获取消息详情信息接口
- * @param 商家ID
- * @returns object data 
+ * @deprecated  消息详情
+ * @param data 消息ID
+ * @returns object
  */ 
-export function getMessageDetail(ID) {
+export function getMessageDetail(data,headers) {
   return request({
-    url: '/api/',
-    method: 'get',
+    url: '/api/v1/message/detail',
+    method: 'post',
+    headers: headers,
+    data: data
 
   })
 }
