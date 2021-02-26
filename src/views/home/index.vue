@@ -180,7 +180,7 @@ export default {
         //   // 请求header
         //   var headers = { OpenID: localStorage.getItem('OpenID') }
         //   // 发起请求
-        //   getRequirementList(data, headers)
+        //   getResidentMerchantsList(data, headers)
         //     .then(response => {
         //       // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getRoomList请求，created使用data参数必须是箭头函数，否则报错undefined
         //       console.log(JSON.stringify(response.rows))
@@ -220,7 +220,7 @@ export default {
       // 请求header
       var headers = { OpenID: localStorage.getItem('OpenID') }
       // 发起请求
-      getRequirementList(data, headers)
+      getResidentMerchantsList(data, headers)
         .then(response => {
           // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getRoomList请求，created使用data参数必须是箭头函数，否则报错undefined
           console.log(JSON.stringify(response.rows))
@@ -256,7 +256,7 @@ export default {
       // 请求header
       var headers = { OpenID: localStorage.getItem('OpenID') }
       // 发起请求
-      getRequirementList(data, headers)
+      getResidentMerchantsList(data, headers)
         .then(response => {
           // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getRoomList请求，created使用data参数必须是箭头函数，否则报错undefined
           console.log(JSON.stringify(response.rows))
