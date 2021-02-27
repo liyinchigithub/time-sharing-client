@@ -1,7 +1,8 @@
-// 注册信息(首次登录,租客端微信授权后，进行绑定手机)
+// 完善信息页(绑定手机后，进入该页进行完善个人信息)
 <template>
   <div>
-    <div class="info">为了商家更好的联系您，请完善信息</div>
+    <div class="info">为了商家更好的联系您</div>
+    <div class="info">请完善信息</div>
     <!-- 头像上传 -->
     <div class="userIcon">
       <!-- <van-uploader :after-read="afterReadLogo" accept="image/*" style="width: 88px; height: 88px">
@@ -206,7 +207,16 @@ export default {
   },
   watch: {},
   directives: {},
-  beforeCreate() {},
+  beforeCreate() {
+    // 获取用户登录状态
+    var isLogin = localStorage.getItem('isLogin')
+    if (isLogin !== 'yes' || isLogin === undefined || isLogin === '' || isLogin === '') {
+      // this.$router.push('/login')
+        window.location.href = `https://pms.bchat.top/customer/#/login` // 注意：这边使用路径是含customer，不用${config.baseUrl}
+      // Notify 失败提示
+      Notify({ type: 'warning', message: '未登录请先登录账号', duration: 2000 })
+    }
+  },
   created() {},
   mounted() {
     // Vue给单独页面添加背景色

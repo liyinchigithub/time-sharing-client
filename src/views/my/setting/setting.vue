@@ -61,7 +61,7 @@ import { modifyCustomerInformation } from '@/api/register/register.js'
 import { getUserInfo } from '@/api/my/userinfo/userinfo.js'
 import axios from 'axios'
 export default {
-  name: 'registerInfo', // 注册信息
+  name: 'setting', // 注册信息
   components: {},
   data() {
     return {

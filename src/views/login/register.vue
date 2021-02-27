@@ -1,7 +1,7 @@
 // 手机号注册页(首次登录，租客微信授权后，进行绑定手机号码)
 <template>
   <div>
-    <div class="login">为了商家更好的联系您，请完善信息</div>
+    <div class="login">为了商家更好的联系您</div>
     <div class="login">请完善信息</div>
     <!-- 手机号、验证码输入框 -->
     <div class="wechat">
