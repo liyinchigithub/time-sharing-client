@@ -1,10 +1,10 @@
  
-// 我的-设置-完善商家信息（和注册绑定手机号后跳转完善信息registerInfo页面内容一样）
+// 我的-设置-完善租客信息（和注册绑定手机号后跳转完善信息registerInfo页面内容一样）
 <template>
   <div>
     <!-- 顶栏 -->
     <van-nav-bar title="" left-arrow @click-left="onClickLeft" :fixed="true" :border="true" />
-    <div class="info">请完善商家信息</div>
+    <div class="info">请完善信息</div>
     <!-- 头像上传 -->
     <div class="userIcon">
       <!-- <van-uploader :after-read="afterReadLogo" accept="image/*" style="width: 88px; height: 88px">
