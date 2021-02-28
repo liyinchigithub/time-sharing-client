@@ -66,6 +66,18 @@
             </van-row>
           </template>
         </van-cell>
+        <!-- 扫一扫 -->
+        <van-cell title="扫一扫" is-link @click="toScan">
+          <!-- 使用 title 插槽来自定义标题 -->
+          <template #title>
+            <van-row>
+              <van-col span="2"
+                ><img src="../../assets/image/scan.png" alt="" srcset="" width="22px" height="22px"
+              /></van-col>
+              <van-col span="6" offset="1"><span class="custom-title">扫一扫</span></van-col>
+            </van-row>
+          </template>
+        </van-cell>
       </div>
     </div>
   </div>
@@ -78,6 +90,7 @@ import { mapGetters } from 'vuex'
 import { PullRefresh, List, Dialog, Toast, Pagination, Notify } from 'vant'
 import wx from 'weixin-js-sdk'
 import config from '../../config/index' // 引入环境配置参数
+import { wxGetSignature } from '@/api/login/login.js' // 引入后端api
 
 export default {
   data() {
@@ -135,6 +148,79 @@ export default {
     // 路由跳转（我的收藏页）
     toFavorite() {
       this.$router.push('/myFavorite')
+    },
+    // 路由跳转（微信扫一扫）
+    toScan() {
+      // 当前页面域名
+      this.signatureUrl = window.location.href.split('#')[0]
+      console.log(this.signatureUrl)
+      // GET 请求后端进行签名,存储签名参数
+      wxGetSignature({ url: window.location.href.split('#')[0] })
+        .then(response => {
+          console.log(`signature：${JSON.stringify(response)}`)
+          // 存储签名信息
+          localStorage.setItem('wxSignature', JSON.stringify(response.data))
+          this.timestamp = response.data.timestamp
+          this.nonceStr = response.data.nonceStr
+          this.signature = response.data.signature
+          //  JSSDK 配置、初始化（调用函数）
+          wx.config({
+            debug: false,
+            appId: config.APPID,
+            timestamp: this.timestamp,
+            nonceStr: this.nonceStr,
+            signature: this.signature,
+            jsApiList: ['checkJsApi', 'scanQRCode']
+          })
+          var that = this
+          // wx.config信息验证后会执行wx.ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+          wx.ready(function () {
+            // 检查配置结果
+            wx.checkJsApi({
+              jsApiList: ['scanQRCode'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+              // 成功
+              success: function (res) {
+                // alert(res.checkResult.getLocation)
+                if (res.checkResult.getLocation == false) {
+                  Dialog({
+                    message: '你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！'
+                  })
+                  return
+                }
+              }
+            })
+            wx.scanQRCode({
+              needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+              scanType: ['qrCode', 'barCode'], // 可以指定扫二维码还是一维码，默认二者都有
+              success: function (res) {
+                var result = res.resultStr // 当needResult 为 1 时，扫码返回的结果
+                // window.location.href = result;
+                that.$router.push(`/wxscanResult/:${result}`)
+                alert(result)
+              }
+            })
+          })
+          // wx.wx.config信息验证后会执行wx.error方法
+          wx.error(function (res) {
+            // // wx.config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+            // Toast.fail('登录超时，请重新登录')
+            // Notify({ type: 'warning', message: '登录超时，请重新登录', duration: 2000 })
+            // setTimeout(() => {
+            //   that.$router.push('/login') // 注意：这边微信JSSDK重写了this
+            // }, 1500)
+            console.log(res)
+          })
+        })
+        .catch(err => {
+          console.log(err)
+          // // 如果授权失败
+          // Toast.fail('登录超时，请重新登录')
+          // Notify({ type: 'warning', message: '登录超时，请重新登录', duration: 2000 })
+          // setTimeout(() => {
+          //   that.$router.push('/login') // 注意：这边微信JSSDK重写了this
+          // }, 1500)
+          console.log('调用扫一扫失败', err)
+        })
     },
     // 请求数据案例
     initData() {
