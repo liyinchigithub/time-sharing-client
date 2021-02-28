@@ -5,43 +5,41 @@
     <!-- 顶栏 -->
     <van-nav-bar title="" left-arrow @click-left="onClickLeft" :fixed="true" :border="true" />
     <div class="result">
-      {{wxscanResult}}
+      二维码扫码结果：{{ this.wxscanResult }}
     </div>
-   
   </div>
 </template>
 
 <script>
 /* eslint-disable */
 import { Toast } from 'vant'
-import { modifyCustomerInformation } from '@/api/register/register.js'
-import { getUserInfo } from '@/api/my/userinfo/userinfo.js'
 import axios from 'axios'
 export default {
   name: 'wxscanResult', // 微信扫一扫结果页
   components: {},
   data() {
     return {
-      wxscanResult: '', // 
+      wxscanResult: '' //
     }
   },
   computed: {},
   methods: {
-   
     // 路由跳转（返回我的页面）
     onClickLeft() {
-      this.$router.go(-1);// 返回上一页
+      this.$router.go(-1) // 返回上一页
     }
   },
   watch: {},
   directives: {},
   beforeCreate() {},
   created() {
-    this.wxscanResult=this.$route.params.wxscanResult;
+    
   },
   mounted() {
     // Vue给单独页面添加背景色
-    document.body.style.backgroundColor = '#F5F5F5'
+    document.body.style.backgroundColor = '#F5F5F5';
+    // 接收路由地址参数（扫一扫结果内容）
+    this.wxscanResult = this.$route.params.wxscanResult
   }
 }
 </script>
