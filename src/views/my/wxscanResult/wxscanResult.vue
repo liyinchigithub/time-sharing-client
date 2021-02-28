@@ -4,7 +4,8 @@
   <div>
     <!-- 顶栏 -->
     <van-nav-bar title="扫描结果" left-arrow @click-left="onClickLeft" :fixed="true" :border="true" />
-    <div class="result">二维码扫码结果：{{ this.wxscanResult }}</div>
+    <div class="result">二维码扫码结果：</div>
+    <div class="result">{{ this.wxscanResult }}</div>
   </div>
 </template>
 
