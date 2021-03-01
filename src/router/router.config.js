@@ -79,11 +79,6 @@ export const constantRouterMap = [
 		component: () => import('@/views/my/myFavorite/myFavorite')
 	},
 	{
-		path: '/myFavoriteDetail/:favoriteID',
-		name: 'MyFavoriteDetail',
-		component: () => import('@/views/my/myFavorite/myFavoriteDetail')
-	},
-	{
 		path: '/wxscanResult/:wxscanResultContent',
 		name: 'WxscanResult',
 		component: () => import('@/views/my/wxscanResult/wxscanResult')

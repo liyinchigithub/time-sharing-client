@@ -46,7 +46,7 @@
                             plain
                             type="danger"
                             style="width: 90px; height: 40px"
-                            @click="deleteMerchants(item.ID)"
+                            @click="deleteFavorite(item.ID)"
                             >删除</van-button
                           >
                         </div>
@@ -89,7 +89,7 @@
                       <!-- 删除按钮 -->
                       <van-col span="15">
                         <div style="margin-left: 110%; margin-top: 10px; margin-bottom: 10px; font-size: 15px">
-                          <van-button plain type="danger" style="width: 90px; height: 40px" @click="deleteRoom(item.ID)"
+                          <van-button plain type="danger" style="width: 90px; height: 40px" @click="favoriteDelete(item.ID)"
                             >删除</van-button
                           >
                         </div>
@@ -116,7 +116,7 @@
 <script>
 /* eslint-disable */
 import { Toast, Dialog, Notify, Tab, Tabs } from 'vant'
-import { getMyFavoriteLis, favoriteAddSpace, favoriteAddRoom, favoriteDelete } from '@/api/my/myFavorite/myFavorite.js'
+import { getMyFavoriteList, favoriteAddSpace, favoriteAddRoom, favoriteDelete } from '@/api/my/myFavorite/myFavorite.js'
 import Axios from 'axios'
 export default {
   name: 'myFavorite', // 我的收藏
@@ -146,7 +146,7 @@ export default {
       this.$router.go(-1) // 返回上一页
     },
     // 删除商家
-    deleteMerchants(merchantsID) {
+    deleteFavorite(favoriteID) {
       Dialog.confirm({
         title: '请确认是否删除',
         message: ''
@@ -156,34 +156,41 @@ export default {
           // on confirm
           // 删除成功提示
           Notify({ type: 'primary', message: '删除成功', duration: 1200 })
-          console.log(`商家ID：${merchantsID}`)
-          // TODO 请求后端接口，删除收藏中商家ID
-
+          console.log(`商家ID：${favoriteID}`)
+          //  请求后端接口，删除收藏
+          var data = new FormData()
+          // 请求body
+          data.append('id', favoriteID)
+          // 请求header
+          var headers = { OpenID: localStorage.getItem('OpenID') }
+          // 发起请求
+          favoriteDelete(data, headers)
+            .then(response => {
+              // 刷新完成
+              this.isLoading = true
+              // 显示遮罩层
+              this.overlayShow = true
+              // 判断是否删除成功
+              if (response.status === 200) {
+                // 刷新完成
+                this.isLoading = false
+                // 隐藏遮罩层
+                this.overlayShow = false
+                // Toast
+                Toast.success('删除成功')
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            })
           // 刷新页面
+          this.$router.go(0)
         })
         .catch(() => {
           // on cancel
         })
     },
-    // 删除房间
-    deleteRoom(roomID) {
-      Dialog.confirm({
-        title: '请确认是否删除',
-        message: ''
-        // theme: 'round-button'
-      })
-        .then(() => {
-          // on confirm
-          // 删除成功提示
-          Notify({ type: 'primary', message: '删除成功', duration: 1200 })
-          console.log(`房间ID：${roomID}`)
-          // TODO 请求后端接口，删除房间
 
-          // 刷新页面
-        })
-        .catch(() => {
-          // on cancel
-        })
     },
     // 路由跳转（商家详情页）
     toMerchantsDetails(merchantsID) {
@@ -251,12 +258,11 @@ export default {
           // TODO 请求后端，获取该租户ID，所有收藏的商家列表
           var data = new FormData()
           // 请求body
-          data.append('pageNum', this.page)
-          data.append('pageSize', this.pageCount)
+          data.append('type', 1)
           // 请求header
           var headers = { OpenID: localStorage.getItem('OpenID') }
           // 发起请求
-          getCollectionList(data, headers)
+          getMyFavoriteList(data, headers)
             .then(response => {
               // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getRoomList请求，created使用data参数必须是箭头函数，否则报错undefined
               console.log(JSON.stringify(response.rows))
@@ -282,12 +288,11 @@ export default {
           // TODO 请求后端，获取该租户ID，所有收藏的房间列表
           var data = new FormData()
           // 请求body
-          data.append('pageNum', this.page)
-          data.append('pageSize', this.pageCount)
+          data.append('type', 2)
           // 请求header
           var headers = { OpenID: localStorage.getItem('OpenID') }
           // 发起请求
-          getRoomList(data, headers)
+          getMyFavoriteList(data, headers)
             .then(response => {
               // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getRoomList请求，created使用data参数必须是箭头函数，否则报错undefined
               console.log(JSON.stringify(response.rows))
@@ -369,7 +374,6 @@ export default {
           })
           break
       }
-    }
   },
   watch: {},
   directives: {},
