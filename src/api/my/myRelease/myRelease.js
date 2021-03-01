@@ -6,7 +6,7 @@ import request from '@/utils/request'// axios
 
 /**
  * @method myRequirementList
- * @deprecated 我的需求列表
+ * @deprecated 我的需求列表（我发布的）
  * @param  data pageNum int 页码，默认1非必传
  * @param  data pageSize int 每页条数，默认10 非必传
  * @returns object 
@@ -38,7 +38,7 @@ export function releaseRequirement(data, headers) {
 /**
  * @method deleteRequirement
  * @deprecated 删除需求
- * @param  data int    需求ID
+ * @param  data 
  * @returns object 
  * */
 export function deleteRequirement(data, headers) {
