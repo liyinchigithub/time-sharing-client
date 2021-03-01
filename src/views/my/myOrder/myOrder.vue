@@ -4,9 +4,9 @@
     <!-- 顶栏 -->
     <van-nav-bar title="我的订单" left-arrow @click-left="onClickLeft" :fixed="true" :border="true" />
     <!-- 订单状态 -->
-    <van-tabs class="tabs" title-active-color="#409EFF" color="#02A7F0">
+    <van-tabs class="tabs" v-model="activeName" @click="onClick" title-active-color="#409EFF" color="#02A7F0">
       <!-- 全部tab -->
-      <van-tab title="全部">
+      <van-tab title="全部" name="全部">
         <!-- 下拉刷新 -->
         <van-pull-refresh v-model="isLoading" success-text="刷新成功" @refresh="onRefresh">
           <!-- 上拉加载（滚动条与底部距离小于 offset 时触发load事件） -->
@@ -84,16 +84,13 @@
         </van-pull-refresh>
       </van-tab>
       <!-- </van-pull-refresh> -->
-      <van-tab title="待付款"
-        >待付款 TODO
+      <van-tab title="待付款" name="待付款">
         <div></div>
       </van-tab>
-      <van-tab title="待使用"
-        >待使用 TODO
+      <van-tab title="待使用" name="待使用">
         <div></div>
       </van-tab>
-      <van-tab title="已取消"
-        >已取消 TODO
+      <van-tab title="已取消" name="已取消">
         <div></div>
       </van-tab>
     </van-tabs>
@@ -128,7 +125,9 @@ export default {
       loading: false, // 是否显示加载中
       finished: false, // 是否显示加载完成
       // 遮罩层
-      overlayShow: false
+      overlayShow: false,
+      // 当前选中tab
+      activeName: ''
     }
   },
   computed: {},
@@ -138,6 +137,10 @@ export default {
       this.$router.push('/my')
       // this.$router.go(-1);// 返回上一页
     },
+    // tab点击切换事件
+    onClick(name, title) {
+      this.getItemList()
+    },
     // 路由跳转（订单详情页）
     toOrderDetail(orderID) {
       this.$router.push(`/orderDetail/${orderID}`)
@@ -145,44 +148,13 @@ export default {
     /**
      * @method onRefresh
      * @description 下拉刷新
-     * */ 
+     * */
     onRefresh() {
       // 显示遮罩层
       this.overlayShow = true
       setTimeout(() => {
         // 刷新页面
         this.$router.go(0)
-        // // TODO 请求后端接口，获取列表数据（默认一页X个数据） 根据当前选中tab类型请求数据
-        // var data = new FormData()
-        // this.page = 1 // 注意：这边需要初始化
-        // this.pageCount = 4 // 注意：这边需要初始化
-        // // 请求body
-        // data.append('sid', this.spaceID)
-        // data.append('pageNum', this.page)
-        // data.append('pageSize', this.pageCount)
-        // // 请求header
-        // var headers = { OpenID: localStorage.getItem('OpenID') }
-        // // 发起请求
-        // getOrderList(data, headers)
-        //   .then(response => {
-        //     // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getRoomList请求，created使用data参数必须是箭头函数，否则报错undefined
-        //     console.log(JSON.stringify(response.rows))
-        //     // 存储数据
-        //     this.orderItemList = response.rows // 列表数据
-        //     this.total = response.total // 总条数
-        //     this.isLoading = false // 隐藏加载中
-        //     if (this.orderItemList.length >= this.total) {
-        //       // 当数据长度大于等于接口返回总数时，说明加载完成
-        //       this.finished = true // 显示加载完成
-        //     }
-        //     // 刷新完成
-        //     this.isLoading = false
-        //     // 隐藏遮罩层
-        //     this.overlayShow = false
-        //   })
-        //   .catch(error => {
-        //     console.log(error)
-        //   })
         // 刷新完成
         this.isLoading = false
         // 隐藏遮罩层
@@ -197,8 +169,21 @@ export default {
     getItemList() {
       // TODO 请求后端数据
       var data = new FormData()
-      // 请求body
-      data.append('sid', this.spaceID)
+      // 判断当前选中
+      switch (this.activeName) {
+        case '待付款':
+          data.append('status', 1) // int	状态，1待付款，11待使用，21已完成，31已取消，41已过期，不传则全部
+          break
+        case '待使用':
+          data.append('status', 11) // int	状态，1待付款，11待使用，21已完成，31已取消，41已过期，不传则全部
+          break
+        case '已取消':
+          data.append('status', 31) // int	状态，1待付款，11待使用，21已完成，31已取消，41已过期，不传则全部
+          break
+        default:
+          // 不传则全部
+          break
+      }
       data.append('pageNum', this.page)
       data.append('pageSize', this.pageCount)
       // 请求header
