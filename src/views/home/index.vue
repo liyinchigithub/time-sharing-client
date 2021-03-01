@@ -1,84 +1,71 @@
 <!-- 商家广场 -->
 <template>
   <div>
-    <!-- 定位icon、当前城市 -->
-    <div class="currentCity" @click="toChangeCity">
-      <!-- TODO 默认城市：存储微信授权后JSSDK请求用户地理位置经纬度 -->
-      <h2><van-icon name="location-o" />{{ currentCity }}</h2>
-    </div>
-    <!-- 标签 -->
-    <div class="tabs">
-      <van-tabs
-        v-model="active"
-        animated
-        swipeable
-        color="#02A7F0"
-        title-active-color="#409EFF"
-        swipe-threshold="5"
-        @change="tabsChange"
-      >
-        <van-tab v-for="(tab, index) in tabsList" :title="tab" :key="index">
-          <!-- 列表 -->
-          <div class="list1" v-for="(skeleton, index) in itemList" :title="skeleton" :key="index">
-            <!-- 栅格(未加载完数据前展示) -->
-            <van-skeleton title avatar :row="3" :loading="skeletonShow" />
+    <div id="u9_div">
+      <div class="releaseRequirement">
+        <!-- 定位icon、当前城市 -->
+        <div>
+          <div class="currentCity" @click="toChangeCity">
+            <!-- TODO 默认城市：存储微信授权后JSSDK请求用户地理位置经纬度 -->
+            <h2><van-icon name="location-o" />{{ currentCity }}</h2>
           </div>
-          <!-- 下拉刷新 -->
-          <van-pull-refresh v-model="isLoading" success-text="刷新成功" @refresh="onRefresh">
-            <!-- 上拉加载（滚动条与底部距离小于 offset 时触发load事件） -->
-            <van-list
-              v-model="loading"
-              :finished="finished"
-              @load="onLoad"
-              :offset="100"
-              :immediate-check="true"
-              finished-text="已到底"
-            >
-              <!-- 列表 -->
-              <div class="list2" id="list-content">
-                <!-- 卡片 -->
-                <div class="card" v-for="(item, index) in itemList" :title="item" :key="index" v-show="cardShow">
-                  <div @click="toTenantRequirementsDetails(index)">
-                    <Card :shadow="false">
-                      <div>
-                        <div class="cardTile">
-                          <van-row>
-                            <van-col span="3"><Avatar :src="item.headImgUrl" /></van-col>
-                            <van-col span="10">{{ item.username }}</van-col>
-                            <!-- TODO 相对时间 -->
-                            <van-col span="8" offset="3">发布于：10小时前</van-col>
-                          </van-row>
-                        </div>
-                        <div class="cardTag">
-                          <!-- TODO -->
-                          <Tag color="blue" v-for="(tag, index) in tabsList" :key="index"
-                            ><van-icon class-prefix="iconfont" name="youhui" style="color: bule" />{{ tag }}</Tag
-                          >
-                        </div>
-                        <div class="cardLeasableTime">
-                          <!-- TODO -->
-                          <van-icon class-prefix="iconfont" name="tubiao-bingtu" />{{ item.requireTime }}
-                        </div>
-                        <div class="cardLocation">
-                          <!-- TODO -->
-                          <van-icon class-prefix="iconfont" name="dingwei1" />{{ item.requireLocation }}
-                        </div>
-                      </div>
-                    </Card>
-                  </div>
-                </div>
-              </div>
-            </van-list>
-          </van-pull-refresh>
-        </van-tab>
-      </van-tabs>
+        </div>
+        <!-- 选择时间段 -->
+        <div class="datetime">12月1日 ~ 12月2日 共 1 晚 选择时间段</div>
+        <div class="lease-time">
+          <van-cell-group>
+            <!-- 开始时间 -->
+            <van-cell title="开始时间" :value="this.GMTToStr(startTimeValue)" @click="setStartTimeValue" />
+            <!-- 结束时间 -->
+            <van-cell title="结束时间" :value="this.GMTToStr(endTimeValue)" @click="setEndTimeValue" />
+          </van-cell-group>
+        </div>
+        <!-- 选择标签 -->
+        <div class="tagSelected">选择标签</div>
+        <div class="screening-tags">
+          <Tag
+            v-for="(tag, index) in tags"
+            :key="index"
+            :checkable="checkable"
+            :checked="checked"
+            :name="tag"
+            color="blue"
+            @on-change="tagCheckableChange"
+            ><van-icon class-prefix="iconfont" name="youhui" style="color: bule" />{{ tag }}</Tag
+          >
+        </div>
+        <!-- 发布需求 -->
+        <div style="padding: 5px 16px">
+          <van-button width="300px" type="info" block round @click="releaseRequirementButton"> 发布需求 </van-button>
+        </div>
+      </div>
     </div>
+
     <!-- 遮罩层 -->
     <van-overlay :show="overlayShow">
       <div class="wrapper">
         <div class="block"><van-loading size="40px" color="#1989fa"></van-loading></div>
       </div>
     </van-overlay>
+    <!-- 开始时间选择器 -->
+    <van-popup v-model="showPopupTimeStart" position="bottom" :style="{ height: '50%' }" round>
+      <van-datetime-picker
+        v-model="startTimeValue"
+        type="datetime"
+        title="选择结束时间"
+        @confirm="PopupTimeStartConfirm"
+        @cancel="PopupTimeStartCancel"
+    /></van-popup>
+    <!-- 结束时间选择器 -->
+    <van-popup v-model="showPopupTimeEnd" position="bottom" :style="{ height: '50%' }" round>
+      <van-datetime-picker
+        v-model="endTimeValue"
+        type="datetime"
+        title="选择结束时间"
+        @confirm="PopupTimeEndConfirm"
+        @cancel="PopupTimeEndCancel"
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -126,7 +113,12 @@ export default {
       signature: '',
       signatureUrl: '', // 签名url
       latitude: 0, // 经度
-      longitude: 0 // 维度
+      longitude: 0, // 维度
+      startTimeValue: new Date(),
+      endTimeValue: new Date(),
+      showPopupTimeStart: false,
+      showPopupTimeEnd: false,
+      tags: ['标签1', '标签2', '标签3', '标签4', '标签5', '标签6', '标签7', '标签8', '标签9'] // 待选的标签
     }
   },
   methods: {
@@ -170,36 +162,6 @@ export default {
       setTimeout(() => {
         // 刷新页面
         this.$router.go(0)
-        //   // TODO 请求后端接口，获取列表数据（默认一页X个数据） 根据当前选中tab类型请求数据
-        //   var data = new FormData()
-        //   // 请求body
-        //   this.page = 1 // 注意：这边需要初始化
-        //   this.pageCount = 4 // 注意：这边需要初始化
-        //   data.append('pageNum', this.page)
-        //   data.append('pageSize', this.pageCount)
-        //   // 请求header
-        //   var headers = { OpenID: localStorage.getItem('OpenID') }
-        //   // 发起请求
-        //   getResidentMerchantsList(data, headers)
-        //     .then(response => {
-        //       // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getRoomList请求，created使用data参数必须是箭头函数，否则报错undefined
-        //       console.log(JSON.stringify(response.rows))
-        //       // 存储数据
-        //       this.itemList = response.rows // 列表数据
-        //       this.total = response.total // 总条数
-        //       this.isLoading = false // 隐藏加载中
-        //       if (this.itemList.length >= this.total) {
-        //         // 当数据长度大于等于接口返回总数时，说明加载完成
-        //         this.finished = true // 显示加载完成
-        //       }
-        //       // 刷新完成
-        //       this.isLoading = false
-        //       // 隐藏遮罩层
-        //       this.overlayShow = false
-        //     })
-        //     .catch(error => {
-        //       console.log(error)
-        //     })
         // 刷新完成
         this.isLoading = false
         // 隐藏遮罩层
@@ -284,6 +246,74 @@ export default {
           // this.overlayShow = false
         })
         .catch(err => {})
+    },
+    // 发布需求按钮
+    releaseRequirementButton() {},
+    // 显示开始时间选择器
+    setStartTimeValue() {
+      this.showPopupTimeStart = true
+    },
+    // 显示结束时间选择器
+    setEndTimeValue() {
+      this.showPopupTimeEnd = true
+    },
+    // 开始时间选择器，确定按钮事件
+    PopupTimeStartConfirm(value) {
+      // 收齐时间选择器
+      this.showPopupTimeStart = false
+      // 当前选中的时间
+      this.timeStart = value
+      console.log('this.timeStart', this.timeStart)
+    },
+    // 开始时间选择器，取消按钮事件
+    PopupTimeStartCancel() {
+      this.showPopupTimeStart = false
+    },
+    // 结束时间选择器，确定按钮事件
+    PopupTimeEndConfirm(value) {
+      // 收齐时间选择器
+      this.showPopupTimeEnd = false
+      // 当前选中的时间
+      this.timeEnd = value
+      console.log('this.timeEnd', this.timeEnd)
+    },
+    // 结束时间选择器，取消按钮事件
+    PopupTimeEndCancel() {
+      this.showPopupTimeEnd = false
+    },
+    // GMT转普通格式
+    GMTToStr(time) {
+      let date = new Date(time)
+      let Str =
+        date.getFullYear() +
+        '-' +
+        (date.getMonth() + 1) +
+        '-' +
+        date.getDate() +
+        ' ' +
+        date.getHours() +
+        ':' +
+        date.getMinutes() +
+        ':' +
+        date.getSeconds()
+      return Str
+    },
+    // 选中标签，放入tagsCheckable数组中
+    tagCheckableChange(checked, name) {
+      // 被选中时，放入数组中
+      switch (checked) {
+        case true:
+          this.tagsCheckable.push(name)
+          break
+        default:
+          this.tagsCheckable.pop(name)
+          break
+      }
+      console.log(' this.tagsCheckable', JSON.stringify(this.tagsCheckable))
+    },
+    //
+    checkboxResult() {
+      console.log('checkResult', this.result)
     }
   },
   computed: {},
@@ -446,53 +476,57 @@ export default {
   margin-top: 5%;
   margin-left: 5%;
 }
-.tabs {
-  // margin-top: 1%;
-  // bottom: 80%;
+.releaseRequirement {
+  height: 400px;
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #909399;
+  padding: 7px;
+  margin: 25px;
+  border-radius: 25px;
+  box-shadow: 4px 4px 5px #909399;
+}
+.datetime {
+  /* 设置弹性容器 */
+  display: flex;
+  /* 设置主轴居中 */
+  justify-content: center;
+  /* 设置侧轴居中 */
+  align-items: center;
+}
+.tagSelected {
+  /* 设置弹性容器 */
+  display: flex;
+  /* 设置主轴居中 */
+  justify-content: center;
+  /* 设置侧轴居中 */
+  align-items: center;
+}
+
+.releaseRequirementButton {
+  /* 设置弹性容器 */
+  display: flex;
+  /* 设置主轴居中 */
+  justify-content: center;
+  /* 设置侧轴居中 */
+  align-items: center;
+}
+
+#u9_div {
+  border-width: 0px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
   width: 100%;
-}
-.list1 {
-  margin-top: -10%;
-  margin-bottom: 15%;
-}
-.list2 {
-  margin-top: -5%;
-  margin-bottom: 15%;
-}
-.card {
-  width: 98%;
-  margin-left: 1%;
-  margin-top: 4%;
-  margin-bottom: 1%;
-  // background: inherit;
-  background-color: rgba(255, 255, 255, 1);
-  // border-width: 1px;
-  // 边线
-  // border-style: solid;
-  // 圆角
-  border-radius: 17px;
-  // 卡片内部间距，单位 px
-  // background:#eee;
-  // 卡片内部间距，单位 px
-  padding: 5px;
-}
-// 卡片标题
-.cardTitle {
-  margin-top: 2%;
-}
-// 卡片租赁时间段
-.cardLeasableTime {
-  margin-top: 3%;
-}
-// 分页
-.cardLocation {
-  margin-top: 4%;
-}
-// 卡片标签
-.cardTag {
-  // display: inline;
-  margin-top: 5%;
-  margin-left: 1%;
+  height: 40%;
+  background: -webkit-linear-gradient(270deg, rgba(173, 220, 249, 1) 0%, rgba(255, 255, 255, 1) 95%);
+  background: -moz-linear-gradient(180deg, rgba(173, 220, 249, 1) 0%, rgba(255, 255, 255, 1) 95%);
+  background: linear-gradient(180deg, rgba(173, 220, 249, 1) 0%, rgba(255, 255, 255, 1) 95%);
+  border: none;
+  border-radius: 0px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 // 遮罩层
 .wrapper {
@@ -500,5 +534,30 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+.lease-time-title {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 17px;
+  margin-left: 5%;
+  margin-top: 5%;
+  font-weight: bold;
+}
+.lease-time {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 5%;
+}
+// 标签
+.tags {
+  margin-top: 3%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+// 标签
+.screening-tags {
+  margin-top: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 5%;
 }
 </style>

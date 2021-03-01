@@ -352,36 +352,6 @@ export default {
       setTimeout(() => {
         // 刷新页面
         this.$router.go(0)
-        // // TODO 请求后端接口，获取列表数据（默认一页X个数据） 根据当前选中tab类型请求数据
-        // var data = new FormData()
-        // this.page = 1 // 注意：这边需要初始化
-        // this.pageCount = 4 // 注意：这边需要初始化
-        // // 请求body
-        // data.append('pageNum', this.page)
-        // data.append('pageSize', this.pageCount)
-        // // 请求header
-        // var headers = { OpenID: localStorage.getItem('OpenID') }
-        // // 发起请求
-        // myCustomerHousingResourceList(data, headers)
-        //   .then(response => {
-        //     // 注意：这边要使用箭头函数，因为在页面created时候，会调用一次getRoomList请求，created使用data参数必须是箭头函数，否则报错undefined
-        //     console.log(JSON.stringify(response.rows))
-        //     // 存储数据
-        //     this.housingMatchItemList = response.rows // 列表数据
-        //     this.total = response.total // 总条数
-        //     this.isLoading = false // 隐藏加载中
-        //     if (this.housingMatchItemList.length >= this.total) {
-        //       // 当数据长度大于等于接口返回总数时，说明加载完成
-        //       this.finished = true // 显示加载完成
-        //     }
-        //     // 刷新完成
-        //     this.isLoading = false
-        //     // 隐藏遮罩层
-        //     this.overlayShow = false
-        //   })
-        //   .catch(error => {
-        //     console.log(error)
-        //   })
         // 刷新完成
         this.isLoading = false
         // 隐藏遮罩层
