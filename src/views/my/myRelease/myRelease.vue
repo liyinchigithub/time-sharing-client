@@ -93,7 +93,7 @@
 <script>
 /* eslint-disable */
 import { Toast, Dialog, Notify } from 'vant'
-import { myRequirementList } from '@/api/my/getRelease/getRelease.js'
+import { myRequirementList } from '@/api/my/myRelease/myRelease.js'
 export default {
   name: 'myRelease', // 我的订单
   components: {},
